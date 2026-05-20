@@ -89,6 +89,27 @@ views:
     scheduledDateProperty: note.date
     showScheduledBadge: true
   - type: cms
+    name: "Blog"
+    filters:
+      and:
+        - file.folder.startsWith("Blog")
+    sort:
+      - property: file.ctime
+        direction: DESC
+    imageFormat: "cover"
+    showDate: true
+    customizeNewButton: true
+    newNoteLocation: "Blog"
+    fallbackToEmbeds: "if-empty"
+    propertyDisplay1: file.fullname
+    showTextPreview: true
+    propertyLabels: "above"
+    titleProperty: file.fullname
+    titlePropertyNested: file.fullname
+    dateProperty: file.ctime
+    showTags: false
+    showDraftStatus: false
+  - type: cms
     name: "Documentation"
     filters:
       and:
