@@ -11,7 +11,7 @@ imageOG: false
 hideCoverImage: false
 hideTOC: false
 targetKeyword: ""
-draft: true
+draft: false
 aliases:
   - london-2026-recap
   - posts
