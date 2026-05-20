@@ -10,7 +10,6 @@ formulas:
         )
       ) + "/"
     ).replace("//", "/")
-    
   Content Folder: |-
     if(file.name == "index",
       if(file.folder != "",

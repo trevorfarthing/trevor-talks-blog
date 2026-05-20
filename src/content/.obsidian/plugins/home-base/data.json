@@ -28,8 +28,5 @@
   "autoScroll": false,
   "hideReleaseNotes": false,
   "openWhenEmpty": false,
-  "stickyIconReplaceTab": false,
-  "homeBasePath": "bases/Home.base",
-  "keepExistingTabs": false,
-  "mobileHomeBasePath": ""
+  "stickyIconReplaceTab": false
 }
