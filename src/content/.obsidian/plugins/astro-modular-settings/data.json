@@ -1,0 +1,235 @@
+{
+  "runWizardOnStartup": true,
+  "currentTemplate": "standard",
+  "currentTheme": "charcoal",
+  "customThemeFile": "custom",
+  "contentOrganization": "folder-based",
+  "themeColors": {
+    "mode": "simple",
+    "simpleColors": {
+      "accent": "#5865f2",
+      "background": "#1e1e1e"
+    }
+  },
+  "siteInfo": {
+    "site": "https://trevor-talks.netlify.app",
+    "title": "Trevor Talks",
+    "description": "One guy's takes on travel, tech, and the stuff in between.",
+    "author": "Trevor Farthing",
+    "language": "en",
+    "faviconThemeAdaptive": true,
+    "defaultOgImageAlt": "Astro Modular logo."
+  },
+  "layout": {
+    "contentWidth": "45rem"
+  },
+  "tableOfContents": {
+    "enabled": true,
+    "depth": 4
+  },
+  "footer": {
+    "enabled": true,
+    "content": "© 2026 {author}. Built with the <a href=\"https://github.com/davidvkimball/astro-modular\" target=\"_blank\">Astro Modular</a> theme.",
+    "showSocialIconsInFooter": true
+  },
+  "seo": {
+    "defaultOgImageAlt": "Astro Modular logo."
+  },
+  "navigation": {
+    "showNavigation": true,
+    "style": "traditional",
+    "showMobileMenu": true,
+    "pages": [
+      {
+        "title": "Posts",
+        "url": "/posts/"
+      },
+      {
+        "title": "About",
+        "url": "/about/"
+      }
+    ],
+    "social": [
+      {
+        "title": "Instagram",
+        "url": "https://instagram.com/trevor_farthing",
+        "icon": "x-twitter"
+      },
+      {
+        "title": "GitHub",
+        "url": "https://github.com/trevorfarthing",
+        "icon": "github"
+      }
+    ]
+  },
+  "commandPalette": {
+    "enabled": true,
+    "shortcut": "ctrl+K",
+    "placeholder": "Search posts",
+    "search": {
+      "posts": true,
+      "pages": false,
+      "projects": false,
+      "docs": false
+    },
+    "sections": {
+      "quickActions": true,
+      "pages": true,
+      "social": true
+    },
+    "quickActions": {
+      "enabled": true,
+      "toggleMode": true,
+      "graphView": true,
+      "changeTheme": true
+    }
+  },
+  "homeOptions": {
+    "featuredPost": {
+      "enabled": true,
+      "type": "latest",
+      "slug": "getting-started"
+    },
+    "recentPosts": {
+      "enabled": true,
+      "count": 7
+    },
+    "projects": {
+      "enabled": true,
+      "count": 2
+    },
+    "docs": {
+      "enabled": true,
+      "count": 3
+    },
+    "blurb": {
+      "placement": "below"
+    }
+  },
+  "postOptions": {
+    "postsPerPage": 6,
+    "readingTime": true,
+    "wordCount": true,
+    "tags": true,
+    "linkedMentions": {
+      "enabled": true,
+      "linkedMentionsCompact": false
+    },
+    "graphView": {
+      "enabled": true,
+      "showInSidebar": true,
+      "maxNodes": 100,
+      "showOrphanedPosts": true
+    },
+    "postNavigation": true,
+    "showPostCardCoverImages": "featured-and-posts",
+    "postCardAspectRatio": "og",
+    "customPostCardAspectRatio": "2.5/1",
+    "comments": {
+      "enabled": false,
+      "provider": "giscus",
+      "rawScript": "",
+      "repo": "",
+      "repoId": "",
+      "category": "",
+      "categoryId": "",
+      "mapping": "",
+      "strict": "",
+      "reactions": "",
+      "metadata": "",
+      "inputPosition": "",
+      "theme": "",
+      "lang": "",
+      "loading": ""
+    }
+  },
+  "features": {
+    "commandPalette": true,
+    "readingTime": true,
+    "linkedMentions": true,
+    "linkedMentionsCompact": false,
+    "graphView": true,
+    "postNavigation": true,
+    "hideScrollBar": false,
+    "scrollToTop": true,
+    "showSocialIconsInFooter": true,
+    "profilePicture": true,
+    "comments": false,
+    "featureButton": "mode",
+    "showPostCardCoverImages": "featured-and-posts",
+    "postCardAspectRatio": "og",
+    "customPostCardAspectRatio": "2.5/1",
+    "quickActions": {
+      "enabled": true,
+      "toggleMode": true,
+      "graphView": true,
+      "changeTheme": true
+    }
+  },
+  "typography": {
+    "headingFont": "Inter",
+    "proseFont": "Fira Code",
+    "monoFont": "JetBrains Mono",
+    "fontSource": "local",
+    "fontDisplay": "swap",
+    "customFonts": {
+      "heading": "",
+      "prose": "",
+      "mono": "",
+      "urls": ""
+    }
+  },
+  "optionalFeatures": {
+    "profilePicture": {
+      "enabled": true,
+      "image": "/profile.jpg",
+      "alt": "Profile picture",
+      "size": "md",
+      "url": "",
+      "placement": "header",
+      "style": "circle"
+    },
+    "comments": {
+      "enabled": false,
+      "provider": "giscus",
+      "rawScript": "",
+      "repo": "",
+      "repoId": "",
+      "category": "",
+      "categoryId": "",
+      "mapping": "",
+      "strict": "",
+      "reactions": "",
+      "metadata": "",
+      "inputPosition": "",
+      "theme": "",
+      "lang": "",
+      "loading": ""
+    }
+  },
+  "deployment": {
+    "platform": "cloudflare-workers"
+  },
+  "pluginConfig": {
+    "obsidianSettings": {
+      "attachmentLocation": "subfolder",
+      "subfolderName": "attachments"
+    },
+    "astroComposerSettings": {
+      "creationMode": "file",
+      "indexFileName": "index"
+    },
+    "imageInserterSettings": {
+      "valueFormat": "[[attachments/{image-url}]]",
+      "insertFormat": "[[attachments/{image-url}]]"
+    }
+  },
+  "optionalContentTypes": {
+    "projects": true,
+    "docs": true
+  },
+  "availableThemes": "default",
+  "customThemes": "",
+  "customThemeGenerationEnabled": false,
+  "removeRibbonIcon": false
+}
