@@ -6,15 +6,13 @@ tags:
   - travel
   - london
 image: westminster.jpeg
-imageAlt: ""
+imageAlt: 
 imageOG: false
 hideCoverImage: false
 hideTOC: false
-targetKeyword: ""
+targetKeyword: 
 draft: false
-aliases:
-  - london-2026-recap
-  - posts
+aliases: posts
 ---
 *Some musings from my time in London last week.*
 
