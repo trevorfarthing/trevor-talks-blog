@@ -1,7 +1,7 @@
 ---
 title: London 2026 Recap
 date: 2026-05-19
-description: Some musings from my time in London last week.
+description: A Seattle native's honest take on London — the energy, the history, the food, the tube, and why one week wasn't nearly enough. Travel tips inside.
 tags:
   - travel
   - london
@@ -50,7 +50,7 @@ Of course, nothing is perfect. London has its flaws, just like any other city. L
 The stewardesses make their way down the aisle again, this time with afternoon tea: a scone, sandwich, pastries, and of course, black tea. They sure hand out a lot of food and drink up here. It seems like only an hour ago they gave us all ice cream bars. I can’t say I’m complaining. As the flight nears its end, I slowly come to the grips with the fact that I’ll be back in my own house again soon, doing mundane activities like cooking, cleaning, and going to work. Ugh. The familiarity of home and friends will be a welcome respite though. I can’t wait to recount my travels 10 times *minimum* to all those that ask. For now, I have the vivid memories of London circling my head.
 
 If you made it this far, see my article recounting all of our activities here:
-[[London Activites]]
+[One Week in London: Our Full Itinerary of Museums, Food, Pubs & Day Trips](posts/one-week-in-london/one-week-in-london-our-full-itinerary-of-museums-food-pubs-day-trips.md)
 
 Thanks for reading.
 -Trevor

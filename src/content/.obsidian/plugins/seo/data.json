@@ -36,6 +36,1612 @@
   "duplicateThreshold": 80,
   "cachedGlobalResults": [
     {
+      "file": "docs/sourcetree-and-git-setup/index.md",
+      "displayName": "SourceTree and Git Setup",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": true,
+            "message": "Good title length: 40 characters (SourceTree and Git Setup + \" - Astro Modular\")",
+            "severity": "info"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 75 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "Heading structure is correct",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": true,
+            "message": "Good content length: 928 words",
+            "severity": "info"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "External link: https://git-scm.com/download/win",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 29,
+              "searchText": "https://git-scm.com/download/win",
+              "context": "\n### Windows\n1. Download Git from [git-scm.com](https://git-scm.com/download/win)\n2. Run the installer with default settings\n3. Verify installation: Open Command Prompt and run `git --version`"
+            }
+          },
+          {
+            "passed": true,
+            "message": "External link: https://git-scm.com/download/mac",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 35,
+              "searchText": "https://git-scm.com/download/mac",
+              "context": "### macOS\n1. Install Xcode Command Line Tools: `xcode-select --install`\n2. Or download from [git-scm.com](https://git-scm.com/download/mac)\n3. Verify installation: Open Terminal and run `git --version`\n"
+            }
+          },
+          {
+            "passed": true,
+            "message": "External link: https://www.sourcetreeapp.com/",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 69,
+              "searchText": "https://www.sourcetreeapp.com/",
+              "context": "\n### Download and Install\n1. Visit [sourcetreeapp.com](https://www.sourcetreeapp.com/)\n2. Download the free version\n3. Install with default settings"
+            }
+          },
+          {
+            "passed": true,
+            "message": "External link: https://netlify.com",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 120,
+              "searchText": "https://netlify.com",
+              "context": "\n### For Netlify\n1. Go to [netlify.com](https://netlify.com)\n2. Connect your GitHub account\n3. Select your blog repository"
+            }
+          },
+          {
+            "passed": true,
+            "message": "External link: https://vercel.com",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 129,
+              "searchText": "https://vercel.com",
+              "context": "\n### For Vercel\n1. Go to [vercel.com](https://vercel.com)\n2. Import your GitHub repository\n3. Framework preset: Astro"
+            }
+          },
+          {
+            "passed": true,
+            "message": "External link: https://confluence.atlassian.com/sourcetreekb",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 228,
+              "searchText": "https://confluence.atlassian.com/sourcetreekb",
+              "context": "## Getting Help\n\n- **SourceTree Documentation**: [confluence.atlassian.com](https://confluence.atlassian.com/sourcetreekb)\n- **Git Documentation**: [git-scm.com/doc](https://git-scm.com/doc)\n- **GitHub Help**: [docs.github.com](https://docs.github.com)"
+            }
+          },
+          {
+            "passed": true,
+            "message": "External link: https://git-scm.com/doc",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 229,
+              "searchText": "https://git-scm.com/doc",
+              "context": "\n- **SourceTree Documentation**: [confluence.atlassian.com](https://confluence.atlassian.com/sourcetreekb)\n- **Git Documentation**: [git-scm.com/doc](https://git-scm.com/doc)\n- **GitHub Help**: [docs.github.com](https://docs.github.com)\n"
+            }
+          },
+          {
+            "passed": true,
+            "message": "External link: https://docs.github.com",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 230,
+              "searchText": "https://docs.github.com",
+              "context": "- **SourceTree Documentation**: [confluence.atlassian.com](https://confluence.atlassian.com/sourcetreekb)\n- **Git Documentation**: [git-scm.com/doc](https://git-scm.com/doc)\n- **GitHub Help**: [docs.github.com](https://docs.github.com)\n\nRemember: Git and SourceTree are powerful tools that will make managing your blog much easier. Take time to learn the basics, and don't hesitate to experiment in a test repository first!"
+            }
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": true,
+            "message": "Good reading level: 5.5 (Very easy to read)",
+            "severity": "info"
+          }
+        ]
+      },
+      "overallScore": 85,
+      "issuesCount": 0,
+      "warningsCount": 1,
+      "noticesCount": 12
+    },
+    {
+      "file": "docs/installing-obsidian.md",
+      "displayName": "Installing Obsidian",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": true,
+            "message": "Good title length: 35 characters (Installing Obsidian + \" - Astro Modular\")",
+            "severity": "info"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 60 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "Heading structure is correct",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": false,
+            "message": "Content too short: 154 words",
+            "suggestion": "Aim for at least 300 words",
+            "severity": "warning"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "External link: https://obsidian.md",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 19,
+              "searchText": "https://obsidian.md",
+              "context": "## Download Obsidian\n\n1. Go to [obsidian.md](https://obsidian.md)\n2. Click \"Download\"\n3. Choose your operating system"
+            }
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": true,
+            "message": "Good reading level: 3.4 (Very easy to read)",
+            "severity": "info"
+          }
+        ]
+      },
+      "overallScore": 75,
+      "issuesCount": 0,
+      "warningsCount": 2,
+      "noticesCount": 5
+    },
+    {
+      "file": "docs/configuration.md",
+      "displayName": "Configuration",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": false,
+            "message": "Title too short: 29 characters (Configuration + \" - Astro Modular\")",
+            "suggestion": "Aim for 30-60 characters",
+            "severity": "warning"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 89 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "Heading structure is correct",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": true,
+            "message": "Good content length: 784 words",
+            "severity": "info"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No external links found",
+            "severity": "info"
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": true,
+            "message": "Good reading level: 10.9 (Moderately easy to read)",
+            "severity": "info"
+          }
+        ]
+      },
+      "overallScore": 78,
+      "issuesCount": 0,
+      "warningsCount": 2,
+      "noticesCount": 4
+    },
+    {
+      "file": "docs/api.md",
+      "displayName": "API",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": false,
+            "message": "Title too short: 19 characters (API + \" - Astro Modular\")",
+            "suggestion": "Aim for 30-60 characters",
+            "severity": "warning"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 50 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "Heading structure is correct",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": false,
+            "message": "Content too short: 214 words",
+            "suggestion": "Aim for at least 300 words",
+            "severity": "warning"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No external links found",
+            "severity": "info"
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": false,
+            "message": "Reading level too high: 25.7 (Very difficult to read)",
+            "suggestion": "Consider simplifying sentence structure and using shorter words",
+            "severity": "warning"
+          }
+        ]
+      },
+      "overallScore": 58,
+      "issuesCount": 0,
+      "warningsCount": 4,
+      "noticesCount": 4
+    },
+    {
+      "file": "pages/thank-you.md",
+      "displayName": "Thank You",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": false,
+            "message": "Title too short: 25 characters (Thank You + \" - Astro Modular\")",
+            "suggestion": "Aim for 30-60 characters",
+            "severity": "warning"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 30 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "No heading structure issues found",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": false,
+            "message": "Content too short: 9 words",
+            "suggestion": "Aim for at least 300 words",
+            "severity": "warning"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No external links found",
+            "severity": "info"
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": true,
+            "message": "Good reading level: 3.2 (Very easy to read)",
+            "severity": "info"
+          }
+        ]
+      },
+      "overallScore": 68,
+      "issuesCount": 0,
+      "warningsCount": 3,
+      "noticesCount": 4
+    },
+    {
+      "file": "pages/privacy-policy.md",
+      "displayName": "Privacy Policy",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": true,
+            "message": "Good title length: 30 characters (Privacy Policy + \" - Astro Modular\")",
+            "severity": "info"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 112 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "Heading structure is correct",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": true,
+            "message": "Good content length: 2616 words",
+            "severity": "info"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "External link: https://helpx.adobe.com/flash-player/kb/disable-local-shared-objects-flash.html#main_Where_can_I_change_the_settings_for_disabling__or_deleting_local_shared_objects_",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 63,
+              "searchText": "https://helpx.adobe.com/flash-player/kb/disable-local-shared-objects-flash.html#main_Where_can_I_change_the_settings_for_disabling__or_deleting_local_shared_objects_",
+              "context": "\n- **Cookies or Browser Cookies.** A cookie is a small file placed on Your Device. You can instruct Your browser to refuse all Cookies or to indicate when a Cookie is being sent. However, if You do not accept Cookies, You may not be able to use some parts of our Service. Unless you have adjusted Your browser setting so that it will refuse Cookies, our Service may use Cookies.\n- **Flash Cookies.** Certain features of our Service may use local stored objects (or Flash Cookies) to collect and store information about Your preferences or Your activity on our Service. Flash Cookies are not managed by the same browser settings as those used for Browser Cookies. For more information on how You can delete Flash Cookies, please read \"Where can I change the settings for disabling, or deleting local shared objects?\" available [here](https://helpx.adobe.com/flash-player/kb/disable-local-shared-objects-flash.html#main_Where_can_I_change_the_settings_for_disabling__or_deleting_local_shared_objects_).\n- **Web Beacons.** Certain sections of our Service and our emails may contain small electronic files known as web beacons (also referred to as clear gifs, pixel tags, and single-pixel gifs) that permit the Company, for example, to count users who have visited those pages or opened an email and for other related website statistics (for example, recording the popularity of a certain section and verifying system and server integrity).\n"
+            }
+          },
+          {
+            "passed": true,
+            "message": "External link: https://www.privacypolicies.com/blog/cookies/",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 66,
+              "searchText": "https://www.privacypolicies.com/blog/cookies/",
+              "context": "- **Web Beacons.** Certain sections of our Service and our emails may contain small electronic files known as web beacons (also referred to as clear gifs, pixel tags, and single-pixel gifs) that permit the Company, for example, to count users who have visited those pages or opened an email and for other related website statistics (for example, recording the popularity of a certain section and verifying system and server integrity).\n\nCookies can be \"Persistent\" or \"Session\" Cookies. Persistent Cookies remain on Your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close Your web browser. Learn more about cookies: [What Are Cookies?](https://www.privacypolicies.com/blog/cookies/).\n\nWe use both Session and Persistent Cookies for the purposes set out below:"
+            }
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": false,
+            "message": "Reading level too high: 14.9 (Moderately difficult to read)",
+            "suggestion": "Consider simplifying sentence structure and using shorter words",
+            "severity": "warning"
+          }
+        ]
+      },
+      "overallScore": 75,
+      "issuesCount": 0,
+      "warningsCount": 2,
+      "noticesCount": 6
+    },
+    {
+      "file": "pages/contact.md",
+      "displayName": "Contact",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": false,
+            "message": "Title too short: 23 characters (Contact + \" - Astro Modular\")",
+            "suggestion": "Aim for 30-60 characters",
+            "severity": "warning"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 11 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "No heading structure issues found",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": false,
+            "message": "Content too short: 71 words",
+            "suggestion": "Aim for at least 300 words",
+            "severity": "warning"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No external links found",
+            "severity": "info"
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": true,
+            "message": "Good reading level: 1.3 (Very easy to read)",
+            "severity": "info"
+          }
+        ]
+      },
+      "overallScore": 68,
+      "issuesCount": 0,
+      "warningsCount": 3,
+      "noticesCount": 4
+    },
+    {
+      "file": "pages/about.md",
+      "displayName": "About",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": false,
+            "message": "Title too short: 21 characters (About + \" - Astro Modular\")",
+            "suggestion": "Aim for 30-60 characters",
+            "severity": "warning"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 77 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "Heading structure is correct",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": false,
+            "message": "Content too short: 229 words",
+            "suggestion": "Aim for at least 300 words",
+            "severity": "warning"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "All media elements have alt text",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": false,
+            "message": "Broken internal link: Astro Suite Vault (Modular) Guide",
+            "suggestion": "Check if the file \"posts/astro-suite-vault-modular-guide.md\" exists or update the link",
+            "severity": "error",
+            "position": {
+              "line": 41,
+              "searchText": "[Astro Suite Vault (Modular) Guide](posts/astro-suite-vault-modular-guide.md)",
+              "context": "## Posts to Check Out\n- [[getting-started|Getting Started]]\n- [Astro Suite Vault (Modular) Guide](posts/astro-suite-vault-modular-guide.md) \n\n---"
+            }
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "External link: https://davidvkimball.com",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 11,
+              "searchText": "https://davidvkimball.com",
+              "context": "  - about-us\n---\nWelcome to **Astro Modular**, an Astro blog theme template designed for Obsidian users, created by [David V. Kimball](https://davidvkimball.com). This theme turns Obsidian into a powerful CMS for instant blog publishing.\n\n## Philosophy"
+            }
+          },
+          {
+            "passed": true,
+            "message": "External link: https://unsplash.com/@hg_photo?utm_source=Obsidian%20Image%20Inserter%20Plugin&utm_medium=referral",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 45,
+              "searchText": "https://unsplash.com/@hg_photo?utm_source=Obsidian%20Image%20Inserter%20Plugin&utm_medium=referral",
+              "context": "---\n![Water droplet](attachments/water.png)\n*Photo by [Herbert Goetsch](https://unsplash.com/@hg_photo?utm_source=Obsidian%20Image%20Inserter%20Plugin&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=Obsidian%20Image%20Inserter%20Plugin&utm_medium=referral)*"
+            }
+          },
+          {
+            "passed": true,
+            "message": "External link: https://unsplash.com/?utm_source=Obsidian%20Image%20Inserter%20Plugin&utm_medium=referral",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 45,
+              "searchText": "https://unsplash.com/?utm_source=Obsidian%20Image%20Inserter%20Plugin&utm_medium=referral",
+              "context": "---\n![Water droplet](attachments/water.png)\n*Photo by [Herbert Goetsch](https://unsplash.com/@hg_photo?utm_source=Obsidian%20Image%20Inserter%20Plugin&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=Obsidian%20Image%20Inserter%20Plugin&utm_medium=referral)*"
+            }
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": true,
+            "message": "Good reading level: 11.7 (Moderately easy to read)",
+            "severity": "info"
+          }
+        ]
+      },
+      "overallScore": 60,
+      "issuesCount": 1,
+      "warningsCount": 3,
+      "noticesCount": 7
+    },
+    {
+      "file": "posts/london-2026-recap/index.md",
+      "displayName": "London 2026 Recap",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": true,
+            "message": "Good title length: 33 characters (London 2026 Recap + \" - Astro Modular\")",
+            "severity": "info"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": true,
+            "message": "Good description length: 146 characters",
+            "severity": "info"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No valid keyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No valid keyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No valid keyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No valid keyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "No heading structure issues found",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": true,
+            "message": "Good content length: 1728 words",
+            "severity": "info"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": false,
+            "message": "Broken internal link: London Activites",
+            "suggestion": "Check if the file \"London Activites.md\" exists or update the link",
+            "severity": "error",
+            "position": {
+              "line": 53,
+              "searchText": "[[London Activites]]",
+              "context": "\nIf you made it this far, see my article recounting all of our activities here:\n[[London Activites]]\n\nThanks for reading."
+            }
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "External link: https://www.merriam-webster.com/dictionary/sonder",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 28,
+              "searchText": "https://www.merriam-webster.com/dictionary/sonder",
+              "context": "I sit here and ponder the last week. In fact, I’ve been pondering what to say about it the last few days. I’m new to this blogging thing so forgive me if this is a little rough around the edges.\n\nWhere to start? Well, let’s just say London is a world-class city for a reason. I’ll use the classic trope to describe it. The city is alive. Maybe that’s cringe or cliché to say, but don’t discredit me just yet. You’ll know what I’m talking about if you’ve been. Around every corner, there’s something happening. People filling the pubs, laughing with a pint of beer in hand. Well-dressed men in suits spilling out of the “tube” in a rush to get to work. Friends dancing to music under a gazebo in a park. All of this gives me a real sense of “[sonder](https://www.merriam-webster.com/dictionary/sonder)”: that weird feeling where everyone is living their own little lives, going about their days entirely separate from you. It’s fun to experience. It’s unspoken, but it feels like you’re a *part* of something – the same thing – the London machine that keeps on chugging. When everyone sits on the tube together, they’re all a piece of it. Different places to be, different goals, but the same nevertheless.\n\nPerhaps this is what a city is meant to be. It may be my naïveté as a young world traveler, but I’ve yet to fully experience the same feeling elsewhere until now. My hometown of Seattle has had glimpses of it – for example, the throngs of people all cheering at the Seahawks Super Bowl victory parade or the Mariners winning in the playoffs. However, it’s not quite the same. London has a constant *buzz* to it. You always want to be somewhere, doing something. Judging by the attendance at the pubs during the after-work rush hour, I’m guessing locals might feel the same. Or maybe they just want to get drunk and forget about the workday. Who knows."
+            }
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": true,
+            "message": "Good reading level: 5.4 (Very easy to read)",
+            "severity": "info"
+          }
+        ]
+      },
+      "overallScore": 93,
+      "issuesCount": 1,
+      "warningsCount": 0,
+      "noticesCount": 5
+    },
+    {
+      "file": "posts/sample-folder-based-post/index.md",
+      "displayName": "Sample Folder-Based Post",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": true,
+            "message": "Good title length: 40 characters (Sample Folder-Based Post + \" - Astro Modular\")",
+            "severity": "info"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": true,
+            "message": "Good description length: 148 characters",
+            "severity": "info"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No valid keyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No valid keyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No valid keyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No valid keyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "Heading structure is correct",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": false,
+            "message": "Content too short: 91 words",
+            "suggestion": "Aim for at least 300 words",
+            "severity": "warning"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "All media elements have alt text",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No external links found",
+            "severity": "info"
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": true,
+            "message": "Good reading level: 9.6 (Moderately easy to read)",
+            "severity": "info"
+          }
+        ]
+      },
+      "overallScore": 90,
+      "issuesCount": 0,
+      "warningsCount": 1,
+      "noticesCount": 4
+    },
+    {
+      "file": "posts/obsidian-embeds-demo.md",
+      "displayName": "Obsidian Embeds Demo",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": true,
+            "message": "Good title length: 36 characters (Obsidian Embeds Demo + \" - Astro Modular\")",
+            "severity": "info"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 39 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "Keyword found in title",
+            "severity": "info"
+          }
+        ],
+        "keywordInDescription": [
+          {
+            "passed": true,
+            "message": "Keyword found in description",
+            "severity": "info"
+          }
+        ],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "Keyword found in H1",
+            "severity": "info"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "Target keyword \"obsidian embeds\" found in slug",
+            "severity": "info"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": false,
+            "message": "Keyword density too low: 0.2%",
+            "suggestion": "Aim for at least 1% density",
+            "severity": "warning"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "Heading structure is correct",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": true,
+            "message": "Good content length: 720 words",
+            "severity": "info"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "All media elements have alt text",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "External link: https://www.youtube.com/watch?v=3zeqJ5tqmaQ",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 47,
+              "searchText": "https://www.youtube.com/watch?v=3zeqJ5tqmaQ",
+              "context": "### YouTube Videos\n\n![Astro Suite for Obsidian](https://www.youtube.com/watch?v=3zeqJ5tqmaQ)\n\nYouTube videos are automatically embedded with responsive design and optimized settings."
+            }
+          },
+          {
+            "passed": true,
+            "message": "External link: https://x.com/davidvkimball/status/1933196479801536736",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 53,
+              "searchText": "https://x.com/davidvkimball/status/1933196479801536736",
+              "context": "### Twitter/X Posts\n\n![Why doesn't everyone use Astro? Writing blog posts in markdown is beautiful.](https://x.com/davidvkimball/status/1933196479801536736)\n\nTwitter posts are embedded with theme-aware styling that matches your site's light/dark mode."
+            }
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": true,
+            "message": "Good reading level: 8.6 (Easy to read)",
+            "severity": "info"
+          }
+        ]
+      },
+      "overallScore": 83,
+      "issuesCount": 0,
+      "warningsCount": 2,
+      "noticesCount": 2
+    },
+    {
       "file": "posts/vault-cms-guide.md",
       "displayName": "Vault CMS Guide",
       "checks": {
@@ -94,7 +1700,7 @@
         "keywordDensity": [
           {
             "passed": false,
-            "message": "Keyword density too low: 0.0%",
+            "message": "Keyword density too low: 0.1%",
             "suggestion": "Aim for at least 1% density",
             "severity": "warning"
           }
@@ -254,165 +1860,6 @@
       "issuesCount": 0,
       "warningsCount": 3,
       "noticesCount": 8
-    },
-    {
-      "file": "posts/obsidian-embeds-demo.md",
-      "displayName": "Obsidian Embeds Demo",
-      "checks": {
-        "titleLength": [
-          {
-            "passed": true,
-            "message": "Good title length: 36 characters (Obsidian Embeds Demo + \" - Astro Modular\")",
-            "severity": "info"
-          }
-        ],
-        "metaDescription": [
-          {
-            "passed": false,
-            "message": "Description too short: 39 characters",
-            "suggestion": "Aim for 120-160 characters",
-            "severity": "warning"
-          }
-        ],
-        "titleH1Uniqueness": [
-          {
-            "passed": true,
-            "message": "Meta title and H1 are unique (prefix/suffix configured)",
-            "severity": "info"
-          }
-        ],
-        "keywordInTitle": [
-          {
-            "passed": true,
-            "message": "Keyword found in title",
-            "severity": "info"
-          }
-        ],
-        "keywordInDescription": [
-          {
-            "passed": true,
-            "message": "Keyword found in description",
-            "severity": "info"
-          }
-        ],
-        "keywordInHeadings": [
-          {
-            "passed": true,
-            "message": "Keyword found in H1",
-            "severity": "info"
-          }
-        ],
-        "keywordInSlug": [
-          {
-            "passed": true,
-            "message": "Target keyword \"obsidian embeds\" found in slug",
-            "severity": "info"
-          }
-        ],
-        "slugFormat": [],
-        "keywordDensity": [
-          {
-            "passed": false,
-            "message": "Keyword density too low: 0.1%",
-            "suggestion": "Aim for at least 1% density",
-            "severity": "warning"
-          }
-        ],
-        "headingOrder": [
-          {
-            "passed": true,
-            "message": "Heading structure is correct",
-            "severity": "info"
-          }
-        ],
-        "contentLength": [
-          {
-            "passed": true,
-            "message": "Good content length: 720 words",
-            "severity": "info"
-          }
-        ],
-        "duplicateTitles": [],
-        "duplicateDescriptions": [],
-        "duplicateContent": [],
-        "altText": [
-          {
-            "passed": true,
-            "message": "All media elements have alt text",
-            "severity": "info"
-          }
-        ],
-        "imageFileNames": [
-          {
-            "passed": false,
-            "message": "Image 2 has random file name: 1933196479801536736",
-            "suggestion": "Use descriptive file names",
-            "severity": "warning",
-            "position": {
-              "line": 53,
-              "searchText": "![Why doesn't everyone use Astro? Writing blog posts in markdown is beautiful.](https://x.com/davidvkimball/status/1933196479801536736)",
-              "context": "### Twitter/X Posts\n\n![Why doesn't everyone use Astro? Writing blog posts in markdown is beautiful.](https://x.com/davidvkimball/status/1933196479801536736)\n\nTwitter posts are embedded with theme-aware styling that matches your site's light/dark mode."
-            }
-          }
-        ],
-        "nakedLinks": [
-          {
-            "passed": true,
-            "message": "No naked links found",
-            "severity": "info"
-          }
-        ],
-        "brokenLinks": [
-          {
-            "passed": true,
-            "message": "No broken internal links found",
-            "severity": "info"
-          }
-        ],
-        "potentiallyBrokenLinks": [
-          {
-            "passed": true,
-            "message": "No potentially broken links found",
-            "severity": "info"
-          }
-        ],
-        "potentiallyBrokenEmbeds": [],
-        "externalBrokenLinks": [
-          {
-            "passed": true,
-            "message": "External link: https://www.youtube.com/watch?v=3zeqJ5tqmaQ",
-            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
-            "severity": "notice",
-            "position": {
-              "line": 47,
-              "searchText": "https://www.youtube.com/watch?v=3zeqJ5tqmaQ",
-              "context": "### YouTube Videos\n\n![Astro Suite for Obsidian](https://www.youtube.com/watch?v=3zeqJ5tqmaQ)\n\nYouTube videos are automatically embedded with responsive design and optimized settings."
-            }
-          },
-          {
-            "passed": true,
-            "message": "External link: https://x.com/davidvkimball/status/1933196479801536736",
-            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
-            "severity": "notice",
-            "position": {
-              "line": 53,
-              "searchText": "https://x.com/davidvkimball/status/1933196479801536736",
-              "context": "### Twitter/X Posts\n\n![Why doesn't everyone use Astro? Writing blog posts in markdown is beautiful.](https://x.com/davidvkimball/status/1933196479801536736)\n\nTwitter posts are embedded with theme-aware styling that matches your site's light/dark mode."
-            }
-          }
-        ],
-        "readingLevel": [
-          {
-            "passed": true,
-            "message": "Good reading level: 8.6 (Easy to read)",
-            "severity": "info"
-          }
-        ]
-      },
-      "overallScore": 83,
-      "issuesCount": 0,
-      "warningsCount": 3,
-      "noticesCount": 2
     },
     {
       "file": "posts/getting-started.md",
@@ -744,20 +2191,163 @@
       "noticesCount": 9
     },
     {
-      "file": "posts/sample-folder-based-post/index.md",
-      "displayName": "Sample Folder-Based Post",
+      "file": "projects/vault-cms/index.md",
+      "displayName": "Vault CMS",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": false,
+            "message": "Title too short: 25 characters (Vault CMS + \" - Astro Modular\")",
+            "suggestion": "Aim for 30-60 characters",
+            "severity": "warning"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 67 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "Heading structure is correct",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": true,
+            "message": "Good content length: 616 words",
+            "severity": "info"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "Relative path link: Vault Guide",
+            "suggestion": "This link may be valid for static site generators but may not work in Obsidian",
+            "severity": "notice",
+            "position": {
+              "line": 81,
+              "searchText": "[Vault Guide](/posts/vault-cms-guide)",
+              "context": "- **CMS-Like Homepage**: \"Home Base\" view showing all posts in reverse-chronological order with bulk editing\n- **Astro Integration**: Seamless workflow from Obsidian to Astro publishing without link conversion\n- **Optimized Hotkeys**: Custom keyboard shortcuts designed for Astro workflows (see [Vault Guide](/posts/vault-cms-guide))\n- **Git Integration**: Optional instant-publish functionality via Git plugin\n- **Visual Parity**: Oxygen theme matches frontend styling for consistent experience"
+            }
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "External link: https://github.com/davidvkimball/astro-modular",
+            "suggestion": "To find if any of these are broken, use the 'Check external links for 404s' button to trigger it.",
+            "severity": "notice",
+            "position": {
+              "line": 106,
+              "searchText": "https://github.com/davidvkimball/astro-modular",
+              "context": "## Project Status\n\nThis project is actively maintained and provides a complete solution for Obsidian-based content management with Astro publishing workflows. The suite is designed to work seamlessly with the above examples and [Astro Modular](https://github.com/davidvkimball/astro-modular) but can be integrated into any Astro project.\n\n<a href=\"https://github.com/davidvkimball/vault-cms\" class=\"no-styling no-underline\" target=\"_blank\"><button class=\"btn btn-primary w-full\">  "
+            }
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": false,
+            "message": "Reading level too high: 18.6 (Very difficult to read)",
+            "suggestion": "Consider simplifying sentence structure and using shorter words",
+            "severity": "warning"
+          }
+        ]
+      },
+      "overallScore": 68,
+      "issuesCount": 0,
+      "warningsCount": 3,
+      "noticesCount": 6
+    },
+    {
+      "file": "projects/astro-composer.md",
+      "displayName": "Astro Composer",
       "checks": {
         "titleLength": [
           {
             "passed": true,
-            "message": "Good title length: 40 characters (Sample Folder-Based Post + \" - Astro Modular\")",
+            "message": "Good title length: 30 characters (Astro Composer + \" - Astro Modular\")",
             "severity": "info"
           }
         ],
         "metaDescription": [
           {
             "passed": true,
-            "message": "Good description length: 148 characters",
+            "message": "Good description length: 151 characters",
             "severity": "info"
           }
         ],
@@ -770,43 +2360,450 @@
         ],
         "keywordInTitle": [
           {
-            "passed": false,
-            "message": "Keyword not found in title",
-            "suggestion": "Include your target keyword in the title",
-            "severity": "warning"
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
           }
         ],
-        "keywordInDescription": [
-          {
-            "passed": false,
-            "message": "Keyword not found in description",
-            "suggestion": "Include your target keyword in the description",
-            "severity": "warning"
-          }
-        ],
+        "keywordInDescription": [],
         "keywordInHeadings": [
           {
-            "passed": false,
-            "message": "Keyword not found in H1",
-            "suggestion": "Include your target keyword in the H1 heading for better SEO",
-            "severity": "warning"
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
           }
         ],
         "keywordInSlug": [
           {
-            "passed": false,
-            "message": "Target keyword \"\"\"\" not found in slug",
-            "suggestion": "Include your target keyword in the filename",
-            "severity": "warning"
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
           }
         ],
         "slugFormat": [],
         "keywordDensity": [
           {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "Heading structure is correct",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": true,
+            "message": "Good content length: 671 words",
+            "severity": "info"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
             "passed": false,
-            "message": "Keyword density too low: 0.0%",
-            "suggestion": "Aim for at least 1% density",
+            "message": "Broken internal link: My Post",
+            "suggestion": "Check if the file \"My Post.md\" exists or update the link",
+            "severity": "error",
+            "position": {
+              "line": 36,
+              "searchText": "[[My Post]]",
+              "context": "\n### Link Conversion\n- **Internal Link Conversion**: Converts Obsidian wikilinks and markdown internal links (`[[My Post]]` or `[My Post](my-post)`) to Astro-friendly Markdown links (`[My Post](/blog/my-post/)`), supporting both file-based and folder-based post structures.\n\n### Multi-Content Type Support"
+            }
+          },
+          {
+            "passed": false,
+            "message": "Broken internal link: My Post",
+            "suggestion": "Check if the file \"my-post.md\" exists or update the link",
+            "severity": "error",
+            "position": {
+              "line": 36,
+              "searchText": "[My Post](my-post)",
+              "context": "\n### Link Conversion\n- **Internal Link Conversion**: Converts Obsidian wikilinks and markdown internal links (`[[My Post]]` or `[My Post](my-post)`) to Astro-friendly Markdown links (`[My Post](/blog/my-post/)`), supporting both file-based and folder-based post structures.\n\n### Multi-Content Type Support"
+            }
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "Relative path link: My Post",
+            "suggestion": "This link may be valid for static site generators but may not work in Obsidian",
+            "severity": "notice",
+            "position": {
+              "line": 36,
+              "searchText": "[My Post](/blog/my-post/)",
+              "context": "\n### Link Conversion\n- **Internal Link Conversion**: Converts Obsidian wikilinks and markdown internal links (`[[My Post]]` or `[My Post](my-post)`) to Astro-friendly Markdown links (`[My Post](/blog/my-post/)`), supporting both file-based and folder-based post structures.\n\n### Multi-Content Type Support"
+            }
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No external links found",
+            "severity": "info"
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": false,
+            "message": "Reading level too high: 12.7 (Moderately difficult to read)",
+            "suggestion": "Consider simplifying sentence structure and using shorter words",
             "severity": "warning"
+          }
+        ]
+      },
+      "overallScore": 80,
+      "issuesCount": 2,
+      "warningsCount": 1,
+      "noticesCount": 5
+    },
+    {
+      "file": "special/projects.md",
+      "displayName": "Projects",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": false,
+            "message": "Title too short: 24 characters (Projects + \" - Astro Modular\")",
+            "suggestion": "Aim for 30-60 characters",
+            "severity": "warning"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 26 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "No heading structure issues found",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": false,
+            "message": "Content too short: 2 words",
+            "suggestion": "Aim for at least 300 words",
+            "severity": "warning"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No external links found",
+            "severity": "info"
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": false,
+            "message": "Reading level too high: 14.7 (Moderately difficult to read)",
+            "suggestion": "Consider simplifying sentence structure and using shorter words",
+            "severity": "warning"
+          }
+        ]
+      },
+      "overallScore": 58,
+      "issuesCount": 0,
+      "warningsCount": 4,
+      "noticesCount": 4
+    },
+    {
+      "file": "special/posts.md",
+      "displayName": "All Posts",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": false,
+            "message": "Title too short: 25 characters (All Posts + \" - Astro Modular\")",
+            "suggestion": "Aim for 30-60 characters",
+            "severity": "warning"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 0 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "No heading structure issues found",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": false,
+            "message": "Content too short: 10 words",
+            "suggestion": "Aim for at least 300 words",
+            "severity": "warning"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No external links found",
+            "severity": "info"
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": false,
+            "message": "Reading level too high: 13.5 (Moderately difficult to read)",
+            "suggestion": "Consider simplifying sentence structure and using shorter words",
+            "severity": "warning"
+          }
+        ]
+      },
+      "overallScore": 58,
+      "issuesCount": 0,
+      "warningsCount": 4,
+      "noticesCount": 4
+    },
+    {
+      "file": "special/home.md",
+      "displayName": "Homepage",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": false,
+            "message": "Title too short: 24 characters (Homepage + \" - Astro Modular\")",
+            "suggestion": "Aim for 30-60 characters",
+            "severity": "warning"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "No description found in properties",
+            "suggestion": "Add description to properties",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
           }
         ],
         "headingOrder": [
@@ -819,7 +2816,7 @@
         "contentLength": [
           {
             "passed": false,
-            "message": "Content too short: 91 words",
+            "message": "Content too short: 34 words",
             "suggestion": "Aim for at least 300 words",
             "severity": "warning"
           }
@@ -830,7 +2827,144 @@
         "altText": [
           {
             "passed": true,
-            "message": "All media elements have alt text",
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "Relative path link: posts",
+            "suggestion": "This link may be valid for static site generators but may not work in Obsidian",
+            "severity": "notice",
+            "position": {
+              "line": 8,
+              "searchText": "[posts](/posts/)",
+              "context": "## Thanks for Reading\n\nIf you're looking for more, check out the [posts](/posts/) page.\n"
+            }
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No external links found",
+            "severity": "info"
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": true,
+            "message": "Good reading level: 5.4 (Very easy to read)",
+            "severity": "info"
+          }
+        ]
+      },
+      "overallScore": 68,
+      "issuesCount": 0,
+      "warningsCount": 3,
+      "noticesCount": 5
+    },
+    {
+      "file": "special/docs.md",
+      "displayName": "Documentation",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": false,
+            "message": "Title too short: 29 characters (Documentation + \" - Astro Modular\")",
+            "suggestion": "Aim for 30-60 characters",
+            "severity": "warning"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 102 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "No heading structure issues found",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": false,
+            "message": "Content too short: 12 words",
+            "suggestion": "Aim for at least 300 words",
+            "severity": "warning"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
             "severity": "info"
           }
         ],
@@ -873,17 +3007,147 @@
         "readingLevel": [
           {
             "passed": true,
-            "message": "Good reading level: 9.6 (Moderately easy to read)",
+            "message": "Good reading level: 8.8 (Easy to read)",
             "severity": "info"
           }
         ]
       },
-      "overallScore": 80,
+      "overallScore": 68,
       "issuesCount": 0,
-      "warningsCount": 6,
-      "noticesCount": 0
+      "warningsCount": 3,
+      "noticesCount": 4
+    },
+    {
+      "file": "special/404.md",
+      "displayName": "Page Not Found",
+      "checks": {
+        "titleLength": [
+          {
+            "passed": true,
+            "message": "Good title length: 30 characters (Page Not Found + \" - Astro Modular\")",
+            "severity": "info"
+          }
+        ],
+        "metaDescription": [
+          {
+            "passed": false,
+            "message": "Description too short: 81 characters",
+            "suggestion": "Aim for 120-160 characters",
+            "severity": "warning"
+          }
+        ],
+        "titleH1Uniqueness": [
+          {
+            "passed": true,
+            "message": "Meta title and H1 are unique (prefix/suffix configured)",
+            "severity": "info"
+          }
+        ],
+        "keywordInTitle": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInDescription": [],
+        "keywordInHeadings": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "keywordInSlug": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "slugFormat": [],
+        "keywordDensity": [
+          {
+            "passed": true,
+            "message": "No targetKeyword defined in properties",
+            "severity": "notice"
+          }
+        ],
+        "headingOrder": [
+          {
+            "passed": true,
+            "message": "No heading structure issues found",
+            "severity": "info"
+          }
+        ],
+        "contentLength": [
+          {
+            "passed": false,
+            "message": "Content too short: 0 words",
+            "suggestion": "Aim for at least 300 words",
+            "severity": "warning"
+          }
+        ],
+        "duplicateTitles": [],
+        "duplicateDescriptions": [],
+        "duplicateContent": [],
+        "altText": [
+          {
+            "passed": true,
+            "message": "No media elements in this post",
+            "severity": "info"
+          }
+        ],
+        "imageFileNames": [
+          {
+            "passed": true,
+            "message": "All images have good file names",
+            "severity": "info"
+          }
+        ],
+        "nakedLinks": [
+          {
+            "passed": true,
+            "message": "No naked links found",
+            "severity": "info"
+          }
+        ],
+        "brokenLinks": [
+          {
+            "passed": true,
+            "message": "No broken internal links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No potentially broken links found",
+            "severity": "info"
+          }
+        ],
+        "potentiallyBrokenEmbeds": [],
+        "externalBrokenLinks": [
+          {
+            "passed": true,
+            "message": "No external links found",
+            "severity": "info"
+          }
+        ],
+        "readingLevel": [
+          {
+            "passed": true,
+            "message": "No readable content found for reading level analysis",
+            "severity": "info"
+          }
+        ]
+      },
+      "overallScore": 75,
+      "issuesCount": 0,
+      "warningsCount": 2,
+      "noticesCount": 4
     }
   ],
-  "lastScanTimestamp": 1773463954001,
+  "lastScanTimestamp": 1779257410319,
   "showNotices": true
 }
