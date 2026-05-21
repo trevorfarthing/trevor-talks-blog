@@ -2,6 +2,7 @@
 import { siteConfig } from '../config';
 import ThemeToggle from './ThemeToggle.astro';
 import Icon from './Icon.astro';
+import SpeechBubbleIcon from '../../public/speech-bubble-icon.svg'
 
 const showProfilePicture = siteConfig.profilePicture.enabled && siteConfig.profilePicture.placement === 'header';
 const profilePicture = siteConfig.profilePicture;
@@ -43,8 +44,11 @@ const paletteIcon = allSectionsDisabled ? 'search' : 'command';
               class={getHeaderProfilePictureClasses(profilePicture.style)}
             />
           ) : (
-            <span class="font-semibold text-primary-900 dark:text-primary-50">
-              {siteConfig.title}
+            <span>
+              <SpeechBubbleIcon width={40} height={40} class="inline"/>
+              <span class="font-semibold text-primary-900 dark:text-primary-50">              
+                {siteConfig.title}
+              </span>
             </span>
           )}
         </a>
