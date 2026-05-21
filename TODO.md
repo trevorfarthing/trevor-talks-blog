@@ -7,3 +7,4 @@
 - Update big preview photo for London blog to something better or filtered
 - Add stuff on About page
 - Update README
+- Figure out how to make site load faster initially - caching?
