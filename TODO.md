@@ -7,5 +7,3 @@
 - Update big preview photo for London blog to something better or filtered
 - Add stuff on About page
 - Update README
-- Update the link color in posts - should be highlighted so you can tell
-- Fix the "ADD LINK" text on my London blog
