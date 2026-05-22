@@ -211,9 +211,9 @@ export const siteConfig: SiteConfig = {
     source: "local", // "local" for self-hosted @fontsource fonts, "cdn" for Google Fonts CDN
     families: {
       // [CONFIG:FONT_BODY]
-      body: "Fira Code",      // Body text font family
+      body: "Fira Code", // Body text font family
       // [CONFIG:FONT_HEADING]
-      heading: "Inter",   // Heading font family  
+      heading: "Inter", // Heading font family
       // [CONFIG:FONT_MONO]
       mono: "JetBrains Mono", // Monospace font family
     },
@@ -290,7 +290,7 @@ export const siteConfig: SiteConfig = {
   // Profile Picture
   profilePicture: {
     // [CONFIG:PROFILE_PICTURE_ENABLED]
-    enabled: true, 
+    enabled: true,
     // [CONFIG:PROFILE_PICTURE_IMAGE]
     image: "/profile.jpg", // Path to your profile image (place in public/ directory)
     // [CONFIG:PROFILE_PICTURE_ALT]
@@ -316,7 +316,7 @@ export const siteConfig: SiteConfig = {
     // [CONFIG:NAVIGATION_PAGES]
     pages: [
       { title: "Posts", url: "/posts/" },
-      { title: "About", url: "/about/" }
+      { title: "About", url: "/about/" },
     ],
     // [CONFIG:NAVIGATION_SOCIAL]
     social: [
