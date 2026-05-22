@@ -3,7 +3,7 @@ title: Contact
 description: Contact me.
 noIndex: false
 hideTOC: false
-draft: false
+draft: true
 aliases:
   - contact-me
   - contact-us
