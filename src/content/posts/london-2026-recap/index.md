@@ -58,4 +58,4 @@ If you made it this far, see my article recounting all of our activities here:
 For more photos: [@trevor_farthing](https://instagram.com/trevor_farthing)
 
 Thanks for reading.
--Trevor
+-T
