@@ -72,6 +72,8 @@ Starting off with...
 - Wolseley Picadilly
 - Osteria Romana
 - Highgate Cemetery
+- A concert at the O2 or one of the many smaller venues
+- ABBA Voyage
 
 Thanks for reading.
 -T
