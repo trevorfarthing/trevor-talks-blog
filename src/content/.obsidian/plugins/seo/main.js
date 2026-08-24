@@ -201,8 +201,9 @@ var init_panel_utils = __esm({
 function removeCodeBlocks(content) {
   return content.replace(/```[\s\S]*?```/g, "").replace(/~~~[\s\S]*?~~~/g, "").replace(/`[^`\n]+`/g, "").replace(/<[^>]*>/g, "").replace(/^---\n[\s\S]*?\n---\n/, "").replace(/::\w+\{[^}]*\}/g, "");
 }
-function removeHtmlAttributes(content) {
-  return content.replace(/```[\s\S]*?```/g, "").replace(/~~~[\s\S]*?~~~/g, "").replace(/`[^`\n]+`/g, "").replace(/<[^>]*>/g, "").replace(/^---\n[\s\S]*?\n---\n/, "").replace(/::\w+\{[^}]*\}/g, "");
+function blankNonContentRegions(content) {
+  const blank = (match) => match.replace(/[^\n]/g, " ");
+  return content.replace(/```[\s\S]*?```/g, blank).replace(/~~~[\s\S]*?~~~/g, blank).replace(/`[^`\n]+`/g, blank).replace(/<[^>]*>/g, blank).replace(/^---\n[\s\S]*?\n---\n/, blank).replace(/::\w+\{[^}]*\}/g, blank);
 }
 var init_content_parser = __esm({
   "src/checks/utils/content-parser.ts"() {
@@ -345,25 +346,25 @@ function checkNakedLinks(content, file, settings) {
   if (!settings.checkNakedLinks) {
     return Promise.resolve([]);
   }
-  const cleanContent = removeHtmlAttributes(content);
-  const nakedLinks = cleanContent.match(/(?<!\]\()(?<!https?:\/\/[^\s)]*\/)https?:\/\/[^\s)]+/g);
-  if (nakedLinks) {
-    nakedLinks.forEach((link, index) => {
-      if (link.includes("web.archive.org/web/") || link.includes("archive.today/") || link.includes("archive.is/") || link.includes("web.archive.org/save/")) {
-        return;
+  const cleanContent = blankNonContentRegions(content);
+  const nakedLinkRegex = /(?<!\]\()(?<!https?:\/\/[^\s)]*\/)https?:\/\/[^\s)]+/g;
+  let match;
+  while ((match = nakedLinkRegex.exec(cleanContent)) !== null) {
+    const link = match[0];
+    if (link.includes("web.archive.org/web/") || link.includes("archive.today/") || link.includes("archive.is/") || link.includes("web.archive.org/save/")) {
+      continue;
+    }
+    const lineNumber = cleanContent.substring(0, match.index).split("\n").length;
+    results.push({
+      passed: false,
+      message: `Naked link found: ${link}`,
+      suggestion: "Convert to markdown link format: [link text](url)",
+      severity: "warning",
+      position: {
+        line: lineNumber,
+        searchText: link,
+        context: getContextAroundLine(content, lineNumber)
       }
-      const lineNumber = findLineNumberForImage(content, link);
-      results.push({
-        passed: false,
-        message: `Naked link found: ${link}`,
-        suggestion: "Convert to markdown link format: [link text](url)",
-        severity: "warning",
-        position: {
-          line: lineNumber,
-          searchText: link,
-          context: getContextAroundLine(content, lineNumber)
-        }
-      });
     });
   }
   if (results.length === 0) {
@@ -726,7 +727,7 @@ function isValidUrl(url) {
   }
 }
 function extractValidExternalLinks(content) {
-  const cleanContent = removeCodeBlocks(content);
+  const cleanContent = blankNonContentRegions(content);
   const externalLinks = [];
   let pos = 0;
   while (pos < cleanContent.length) {
@@ -796,8 +797,10 @@ function checkExternalLinks(content, file, settings) {
   }
   const uniqueLinks = extractValidExternalLinks(content);
   if (uniqueLinks.length > 0) {
-    uniqueLinks.forEach((url, index) => {
-      const lineNumber = findLineNumberForImage(content, url);
+    const cleanContent = blankNonContentRegions(content);
+    uniqueLinks.forEach((url) => {
+      const linkIndex = cleanContent.indexOf(url);
+      const lineNumber = linkIndex >= 0 ? cleanContent.substring(0, linkIndex).split("\n").length : 1;
       results.push({
         passed: true,
         message: `External link: ${url}`,
@@ -833,6 +836,7 @@ async function checkExternalBrokenLinks(content, file, settings, abortController
     });
     return Promise.resolve(results);
   }
+  const cleanContent = blankNonContentRegions(content);
   const checkTasks = uniqueLinks.map(async (url) => {
     if (abortController == null ? void 0 : abortController.signal.aborted) {
       return null;
@@ -879,15 +883,8 @@ async function checkExternalBrokenLinks(content, file, settings, abortController
       }
       let result = null;
       if (linkIsBroken) {
-        const lines = content.split("\n");
-        let lineNumber = 1;
-        for (let i = 0; i < lines.length; i++) {
-          const line = lines[i];
-          if (line && line.includes(url)) {
-            lineNumber = i + 1;
-            break;
-          }
-        }
+        const linkIndex = cleanContent.indexOf(url);
+        const lineNumber = linkIndex >= 0 ? cleanContent.substring(0, linkIndex).split("\n").length : 1;
         result = {
           passed: false,
           message: errorMessage,
@@ -2787,6 +2784,264 @@ var SEOSettingTab = class extends import_obsidian.PluginSettingTab {
     this.icon = "lucide-search-check";
     this.plugin = plugin;
   }
+  // 1.13.0+: framework calls this and skips display().
+  // Pre-1.13.0: this method is not invoked; display() below runs as before.
+  // See https://docs.obsidian.md/plugins/guides/migrate-declarative-settings
+  getSettingDefinitions() {
+    return [
+      {
+        type: "group",
+        heading: "Global",
+        items: [
+          {
+            name: "Scan directories",
+            desc: "Comma-separated list of directory names to scan. Leave blank to scan all directories.",
+            control: { type: "text", key: "scanDirectories", placeholder: "Like blog, posts, public" }
+          },
+          {
+            name: "Use note titles instead of file names",
+            desc: "Display note titles from properties instead of file names in the issues list and current note audit",
+            control: { type: "toggle", key: "useNoteTitles" }
+          },
+          {
+            name: "Title prefix / suffix",
+            desc: "Specify an optional prefix or suffix that gets appended to your meta title - used to factor in character count for the title length check",
+            control: { type: "text", key: "titlePrefixSuffix", placeholder: "Author name" }
+          },
+          {
+            name: "Ignores files with an underscore prefix",
+            desc: "Don't process files that begin with an underscore, like _example.md",
+            control: { type: "toggle", key: "ignoreUnderscoreFiles" }
+          },
+          {
+            // False positive: "MDX" is a proper noun (acronym) and should be capitalized
+            name: "Enable MDX file support",
+            // False positive: "MDX" is a proper noun (acronym) and should be capitalized
+            desc: "Process MDX files in addition to Markdown files. MDX files use the same properties format as Markdown.",
+            control: { type: "toggle", key: "enableMDXSupport" }
+          },
+          {
+            name: "Show ribbon icon",
+            desc: "Show or hide the wizard icon in the left sidebar ribbon",
+            // Render: changing this value has a side effect (ribbon DOM update).
+            render: (setting) => {
+              setting.addToggle((toggle) => toggle.setValue(this.plugin.settings.showRibbonIcon).onChange(async (value) => {
+                this.plugin.settings.showRibbonIcon = value;
+                await this.plugin.saveSettings();
+                this.plugin.toggleRibbonIcon();
+              }));
+            }
+          },
+          {
+            name: "Export format",
+            desc: "Format for copy and download from the audit panel (CSV or Markdown). Markdown is useful for pasting into agents or docs.",
+            control: {
+              type: "dropdown",
+              key: "exportFormat",
+              options: { csv: "CSV", markdown: "Markdown" }
+            }
+          }
+        ]
+      },
+      {
+        type: "group",
+        heading: "Property names",
+        items: [
+          {
+            name: "Keyword property",
+            desc: "Property name for target keyword (targetKeyword, SEO, keyword, etc.)",
+            // False positive: "targetKeyword" is a placeholder, not UI text
+            control: { type: "text", key: "keywordProperty", placeholder: "targetKeyword" }
+          },
+          {
+            name: "Description property",
+            desc: "Property name for meta description",
+            control: { type: "text", key: "descriptionProperty", placeholder: "Description" }
+          },
+          {
+            name: "Title property",
+            desc: "Property name for title (leave blank to skip title checks)",
+            control: { type: "text", key: "titleProperty", placeholder: "Title" }
+          },
+          {
+            name: "Use file name as title",
+            desc: "Use file name as title instead of a property",
+            control: { type: "toggle", key: "useFilenameAsTitle" }
+          },
+          {
+            name: "Slug property",
+            desc: "Property name for slug (leave blank to skip slug checks)",
+            control: { type: "text", key: "slugProperty", placeholder: "Slug" }
+          },
+          {
+            name: "Use file/folder name as slug",
+            desc: "Use file/folder name as slug instead of a property",
+            control: { type: "toggle", key: "useFilenameAsSlug" }
+          },
+          {
+            name: "Use parent folder name instead when specified file name is used",
+            desc: "If a Markdown file matches this file name, use the parent folder name as the slug instead",
+            visible: () => this.plugin.settings.useFilenameAsSlug,
+            control: { type: "text", key: "parentFolderSlugFilename", placeholder: "Index" }
+          }
+        ]
+      },
+      {
+        type: "group",
+        heading: "Audit options",
+        items: [
+          {
+            name: "Check meta title length",
+            desc: "Enable meta title length checking",
+            control: { type: "toggle", key: "checkTitleLength" }
+          },
+          {
+            name: "Check heading order",
+            desc: "Enable heading hierarchy checking",
+            control: { type: "toggle", key: "checkHeadingOrder" }
+          },
+          {
+            name: "Check content length",
+            desc: "Enable content length checking",
+            control: { type: "toggle", key: "checkContentLength" }
+          },
+          {
+            name: "Check duplicate content",
+            desc: "Enable duplicate content detection",
+            // Render: simple bind plus inline warning sub-text appended to descEl.
+            render: (setting) => {
+              setting.addToggle((toggle) => toggle.setValue(this.plugin.settings.checkDuplicateContent).onChange(async (value) => {
+                this.plugin.settings.checkDuplicateContent = value;
+                await this.plugin.saveSettings();
+              }));
+              setting.descEl.createDiv({
+                text: "Warning: This feature can be very resource-intensive with large vaults and many notes. Disable for faster audits.",
+                cls: "setting-item-description seo-warning-message"
+              });
+            }
+          },
+          {
+            name: "Check alt text",
+            desc: "Enable alt text checking for media content (images, videos, embeds, etc.)",
+            control: { type: "toggle", key: "checkAltText" }
+          },
+          {
+            name: "Check image file names",
+            desc: "Enable image file name checking",
+            control: { type: "toggle", key: "checkImageNaming" }
+          },
+          {
+            name: "Check broken internal links",
+            desc: "Enable broken internal link detection",
+            control: { type: "toggle", key: "checkBrokenLinks" }
+          },
+          {
+            name: "Check external links",
+            desc: "Return a list of external links",
+            control: { type: "toggle", key: "checkExternalLinks" }
+          },
+          {
+            name: "Enable broken external link check button",
+            // False positive: Contains quoted button text which is already in sentence case
+            desc: 'Show "Check external links for 404s" button in current note panel',
+            // Render: changing this value has a side effect (side panel refresh).
+            render: (setting) => {
+              setting.addToggle((toggle) => toggle.setValue(this.plugin.settings.enableExternalLinkButton).onChange(async (value) => {
+                this.plugin.settings.enableExternalLinkButton = value;
+                await this.plugin.saveSettings();
+                if (this.plugin.sidePanel) {
+                  this.plugin.sidePanel.refresh();
+                }
+              }));
+            }
+          },
+          {
+            name: "Check naked links",
+            desc: "Enable naked URL detection",
+            control: { type: "toggle", key: "checkNakedLinks" }
+          },
+          {
+            name: "Check reading level",
+            desc: "Enable reading level analysis",
+            control: { type: "toggle", key: "checkReadingLevel" }
+          },
+          {
+            name: "Check potentially broken links",
+            desc: "Check for potentially broken internal links that may not work on web publishing",
+            control: { type: "toggle", key: "checkPotentiallyBrokenLinks" }
+          },
+          {
+            name: "Check potentially broken embeds",
+            desc: "Check for potentially broken Markdown or wikilink-based embedded media that may not work on web publishing",
+            control: { type: "toggle", key: "checkPotentiallyBrokenEmbeds" }
+          },
+          {
+            name: "Flexible relative link check",
+            desc: "Uses flexible validation for relative paths like /page that can be resolved by a static site generator, but may be considered broken by typical Obsidian validation",
+            control: { type: "toggle", key: "publishMode" }
+          },
+          {
+            name: "Title property is H1",
+            desc: "Enable when your static site generator uses the title property to automatically generate the H1 heading. This prevents H1 validation errors while still flagging additional H1 headings that appear after other heading levels.",
+            control: { type: "toggle", key: "skipH1Check" }
+          },
+          {
+            name: "Automatically include broken external link checks in audits (not recommended)",
+            desc: "Include broken external link checking in vault-wide and current note audits",
+            // Render: side effect (side panel refresh) plus inline warning sub-text.
+            render: (setting) => {
+              setting.addToggle((toggle) => toggle.setValue(this.plugin.settings.enableExternalLinkVaultCheck).onChange(async (value) => {
+                this.plugin.settings.enableExternalLinkVaultCheck = value;
+                await this.plugin.saveSettings();
+                if (this.plugin.sidePanel) {
+                  this.plugin.sidePanel.refresh();
+                }
+              }));
+              setting.descEl.createDiv({
+                text: 'Warning: This will make vault audits extremely slow. Use the "Check external links" button instead for individual notes.',
+                cls: "setting-item-description seo-warning-message"
+              });
+            }
+          }
+        ]
+      },
+      {
+        type: "group",
+        heading: "Thresholds",
+        items: [
+          {
+            name: "Minimum content length",
+            desc: "Minimum word count for content length check",
+            control: { type: "number", key: "minContentLength", placeholder: "300", min: 0 }
+          },
+          {
+            name: "Keyword density minimum",
+            desc: "Minimum keyword density percentage",
+            control: { type: "number", key: "keywordDensityMin", placeholder: "1", min: 0 }
+          },
+          {
+            name: "Keyword density maximum",
+            desc: "Maximum keyword density percentage",
+            control: { type: "number", key: "keywordDensityMax", placeholder: "2", min: 0 }
+          },
+          {
+            name: "Duplicate content threshold",
+            desc: "Similarity percentage threshold for duplicate content detection",
+            control: { type: "number", key: "duplicateThreshold", placeholder: "80", min: 0, max: 100 }
+          }
+        ]
+      }
+    ];
+  }
+  // Override the framework's default setControlValue (which only calls saveData)
+  // so that every change runs the plugin's saveSettings() — which also clears
+  // the SEO cache. Without this override, cache would go stale on setting change
+  // on Obsidian 1.13.0+. (On older versions this method is unused; display()
+  // already calls saveSettings() in its onChange handlers.)
+  async setControlValue(key, value) {
+    this.plugin.settings[key] = value;
+    await this.plugin.saveSettings();
+  }
   display() {
     const { containerEl } = this;
     containerEl.empty();
@@ -2928,7 +3183,7 @@ var SEOSettingTab = class extends import_obsidian.PluginSettingTab {
         this.plugin.settings.checkDuplicateContent = value;
         await this.plugin.saveSettings();
       }));
-      setting.descEl.createEl("div", {
+      setting.descEl.createDiv({
         text: "Warning: This feature can be very resource-intensive with large vaults and many notes. Disable for faster audits.",
         cls: "setting-item-description seo-warning-message"
       });
@@ -3010,7 +3265,7 @@ var SEOSettingTab = class extends import_obsidian.PluginSettingTab {
           this.plugin.sidePanel.refresh();
         }
       }));
-      setting.descEl.createEl("div", {
+      setting.descEl.createDiv({
         text: 'Warning: This will make vault audits extremely slow. Use the "Check external links" button instead for individual notes.',
         cls: "setting-item-description seo-warning-message"
       });
@@ -3414,7 +3669,7 @@ This file may have been renamed or deleted.`);
   }
   renderFilesList(files, container, settings) {
     files.forEach((result) => {
-      const fileEl = container.createEl("div", { cls: "seo-file-issue" });
+      const fileEl = container.createDiv({ cls: "seo-file-issue" });
       fileEl.setAttribute("data-file-path", result.file);
       const fileLink = fileEl.createEl("a", {
         text: result.displayName || this.getDisplayPath(result.file),
@@ -3426,13 +3681,13 @@ This file may have been renamed or deleted.`);
         e.stopPropagation();
         void this.openFile(result.file);
       });
-      const statsContainer = fileEl.createEl("div", { cls: "seo-stats-container" });
+      const statsContainer = fileEl.createDiv({ cls: "seo-stats-container" });
       const showNotices = settings ? settings.checkPotentiallyBrokenLinks && settings.checkPotentiallyBrokenEmbeds : true;
       const statsText = [];
       if (result.issuesCount > 0) statsText.push(`${result.issuesCount} issues`);
       if (result.warningsCount > 0) statsText.push(`${result.warningsCount} warnings`);
       if (showNotices && result.noticesCount > 0) statsText.push(`${result.noticesCount} notices`);
-      statsContainer.createEl("span", {
+      statsContainer.createSpan({
         text: statsText.join(", "),
         cls: "seo-file-stats"
       });
@@ -3566,10 +3821,10 @@ var ResultsDisplay = class {
   }
   renderResults(results) {
     let filteredNoticesCount = results.noticesCount;
-    const scoreEl = this.container.createEl("div", { cls: "seo-score-header" });
-    const scoreText = scoreEl.createEl("div", { cls: "seo-score-text" });
-    scoreText.createEl("span", { text: "Score: " });
-    const scoreNumber = scoreText.createEl("span", { text: `${Math.round(results.overallScore)}%` });
+    const scoreEl = this.container.createDiv({ cls: "seo-score-header" });
+    const scoreText = scoreEl.createDiv({ cls: "seo-score-text" });
+    scoreText.createSpan({ text: "Score: " });
+    const scoreNumber = scoreText.createSpan({ text: `${Math.round(results.overallScore)}%` });
     if (results.overallScore >= 80) {
       scoreNumber.addClass("seo-score-excellent");
     } else if (results.overallScore >= 60) {
@@ -3580,31 +3835,31 @@ var ResultsDisplay = class {
       scoreNumber.addClass("seo-score-poor");
     }
     if (results.issuesCount > 0 || results.warningsCount > 0 || filteredNoticesCount > 0) {
-      scoreText.createEl("span", { text: ` (` });
-      scoreText.createEl("span", {
+      scoreText.createSpan({ text: ` (` });
+      scoreText.createSpan({
         text: `${results.issuesCount} issues`,
         cls: "seo-issues-count-text"
       });
-      scoreText.createEl("span", { text: ", " });
-      scoreText.createEl("span", {
+      scoreText.createSpan({ text: ", " });
+      scoreText.createSpan({
         text: `${results.warningsCount} warnings`,
         cls: "seo-warnings-count-text"
       });
       if (filteredNoticesCount > 0) {
-        scoreText.createEl("span", { text: ", " });
-        scoreText.createEl("span", {
+        scoreText.createSpan({ text: ", " });
+        scoreText.createSpan({
           text: `${filteredNoticesCount} notices`,
           cls: "seo-notices-count-text"
         });
       }
-      scoreText.createEl("span", { text: ")" });
+      scoreText.createSpan({ text: ")" });
     } else {
-      scoreText.createEl("span", {
+      scoreText.createSpan({
         text: " (All checks passed!)",
         cls: "seo-success"
       });
     }
-    const toggleBtn = scoreEl.createEl("div", { cls: "seo-toggle-icon" });
+    const toggleBtn = scoreEl.createDiv({ cls: "seo-toggle-icon" });
     toggleBtn.setAttribute("aria-label", this.isCollapsed ? "Expand all" : "Collapse all");
     (0, import_obsidian4.setIcon)(toggleBtn, this.isCollapsed ? "chevrons-up-down" : "chevrons-down-up");
     toggleBtn.addEventListener("mousedown", (e) => {
@@ -3615,7 +3870,7 @@ var ResultsDisplay = class {
       (0, import_obsidian4.setIcon)(toggleBtn, this.isCollapsed ? "chevrons-up-down" : "chevrons-down-up");
       this.toggleChecksVisibility();
     });
-    const checksContainer = this.container.createEl("div", { cls: "seo-checks" });
+    const checksContainer = this.container.createDiv({ cls: "seo-checks" });
     Object.entries(results.checks).forEach(([checkName, checkResults]) => {
       if (checkResults.length === 0) return;
       const checkHasErrors = checkResults.some((r) => r.severity === "error");
@@ -3632,8 +3887,8 @@ var ResultsDisplay = class {
       } else if (checkHasOnlyInfo) {
         statusClass = "seo-passed";
       }
-      const checkEl = checksContainer.createEl("div", { cls: `seo-check ${statusClass}` });
-      const header = checkEl.createEl("div", { cls: "seo-check-header seo-collapsible-header" });
+      const checkEl = checksContainer.createDiv({ cls: `seo-check ${statusClass}` });
+      const header = checkEl.createDiv({ cls: "seo-check-header seo-collapsible-header" });
       header.setAttribute("data-check-name", checkName);
       let displayName = checkName.replace(/([A-Z])/g, " $1").trim().replace(/^./, (str) => str.toUpperCase());
       if (checkName === "brokenLinks") {
@@ -3653,10 +3908,10 @@ var ResultsDisplay = class {
       } else if (checkName === "duplicateContent") {
         displayName = "Duplicate Content";
       }
-      const collapseIcon = header.createEl("span", { cls: "seo-collapse-icon" });
+      const collapseIcon = header.createSpan({ cls: "seo-collapse-icon" });
       collapseIcon.appendChild(createCollapseIcon());
-      header.createEl("span", { text: displayName });
-      const statusIcon = header.createEl("span", { cls: "seo-status" });
+      header.createSpan({ text: displayName });
+      const statusIcon = header.createSpan({ cls: "seo-status" });
       const hasErrors = checkResults.some((r) => r.severity === "error");
       const hasWarnings = checkResults.some((r) => r.severity === "warning");
       const hasNotices = checkResults.some((r) => r.severity === "notice");
@@ -3695,7 +3950,8 @@ var ResultsDisplay = class {
           cls: `seo-result seo-${result.severity}`
         });
         if (result.position) {
-          const messageEl = li.createEl("span", {
+          const position = result.position;
+          const messageEl = li.createSpan({
             text: result.message,
             cls: "seo-result-message seo-clickable"
           });
@@ -3703,19 +3959,19 @@ var ResultsDisplay = class {
             e.preventDefault();
             e.stopPropagation();
             void (async () => {
-              await this.navigateToPosition(result.position);
+              await this.navigateToPosition(position);
             })();
           });
           messageEl.addClass("seo-clickable-message");
           messageEl.title = "Click to jump to this issue in the note";
         } else {
-          li.createEl("span", {
+          li.createSpan({
             text: result.message,
             cls: "seo-result-message"
           });
         }
         if (result.suggestion) {
-          const suggestionEl = li.createEl("div", {
+          const suggestionEl = li.createDiv({
             cls: "seo-suggestion"
           });
           if (result.suggestion.includes('<a href="#" data-file-path=')) {
@@ -3778,7 +4034,7 @@ var ResultsDisplay = class {
     });
   }
   renderGlobalResults(results, settings) {
-    const summary = this.container.createEl("div", { cls: "seo-vault-summary" });
+    const summary = this.container.createDiv({ cls: "seo-vault-summary" });
     const totalFiles = results.length;
     const totalIssues = results.reduce((sum, r) => sum + r.issuesCount, 0);
     const totalWarnings = results.reduce((sum, r) => sum + r.warningsCount, 0);
@@ -3787,9 +4043,9 @@ var ResultsDisplay = class {
       results.reduce((sum, r) => sum + r.overallScore, 0) / totalFiles
     );
     const showNotices = settings ? settings.checkPotentiallyBrokenLinks && settings.checkPotentiallyBrokenEmbeds : true;
-    const statsGrid = summary.createEl("div", { cls: "seo-stats-grid" });
-    const scoreStat = statsGrid.createEl("div", { cls: "seo-stat-item" });
-    const scoreNumber = scoreStat.createEl("div", { cls: "seo-stat-number", text: `${avgScore}%` });
+    const statsGrid = summary.createDiv({ cls: "seo-stats-grid" });
+    const scoreStat = statsGrid.createDiv({ cls: "seo-stat-item" });
+    const scoreNumber = scoreStat.createDiv({ cls: "seo-stat-number", text: `${avgScore}%` });
     if (avgScore >= 80) {
       scoreNumber.addClass("seo-score-excellent");
     } else if (avgScore >= 60) {
@@ -3799,26 +4055,26 @@ var ResultsDisplay = class {
     } else {
       scoreNumber.addClass("seo-score-poor");
     }
-    scoreStat.createEl("div", { cls: "seo-stat-label", text: "Average score" });
-    const issuesStat = statsGrid.createEl("div", { cls: "seo-stat-item" });
-    const issuesNumber = issuesStat.createEl("div", { cls: "seo-stat-number", text: totalIssues.toString() });
+    scoreStat.createDiv({ cls: "seo-stat-label", text: "Average score" });
+    const issuesStat = statsGrid.createDiv({ cls: "seo-stat-item" });
+    const issuesNumber = issuesStat.createDiv({ cls: "seo-stat-number", text: totalIssues.toString() });
     if (totalIssues > 0) {
       issuesNumber.addClass("seo-issues-count");
     }
-    issuesStat.createEl("div", { cls: "seo-stat-label", text: "Issues" });
-    const warningsStat = statsGrid.createEl("div", { cls: "seo-stat-item" });
-    const warningsNumber = warningsStat.createEl("div", { cls: "seo-stat-number", text: totalWarnings.toString() });
+    issuesStat.createDiv({ cls: "seo-stat-label", text: "Issues" });
+    const warningsStat = statsGrid.createDiv({ cls: "seo-stat-item" });
+    const warningsNumber = warningsStat.createDiv({ cls: "seo-stat-number", text: totalWarnings.toString() });
     if (totalWarnings > 0) {
       warningsNumber.addClass("seo-warnings-count");
     }
-    warningsStat.createEl("div", { cls: "seo-stat-label", text: "Warnings" });
+    warningsStat.createDiv({ cls: "seo-stat-label", text: "Warnings" });
     if (showNotices) {
-      const noticesStat = statsGrid.createEl("div", { cls: "seo-stat-item" });
-      const noticesNumber = noticesStat.createEl("div", { cls: "seo-stat-number", text: totalNotices.toString() });
+      const noticesStat = statsGrid.createDiv({ cls: "seo-stat-item" });
+      const noticesNumber = noticesStat.createDiv({ cls: "seo-stat-number", text: totalNotices.toString() });
       if (totalNotices > 0) {
         noticesNumber.addClass("seo-notices-count");
       }
-      noticesStat.createEl("div", { cls: "seo-stat-label", text: "Notices" });
+      noticesStat.createDiv({ cls: "seo-stat-label", text: "Notices" });
     }
   }
   renderIssuesList(results, currentSort, onSortChange, onShowSortMenu, settings) {
@@ -3829,9 +4085,9 @@ var ResultsDisplay = class {
       return hasIssues || hasWarnings;
     });
     if (issuesFiles.length === 0) return;
-    const issuesList = this.container.createEl("div", { cls: "seo-issues-list" });
-    const issuesHeader = issuesList.createEl("div", { cls: "seo-issues-header-container" });
-    const collapseIcon = issuesHeader.createEl("span", { cls: "seo-collapse-icon seo-collapsible-header" });
+    const issuesList = this.container.createDiv({ cls: "seo-issues-list" });
+    const issuesHeader = issuesList.createDiv({ cls: "seo-issues-header-container" });
+    const collapseIcon = issuesHeader.createSpan({ cls: "seo-collapse-icon seo-collapsible-header" });
     collapseIcon.setAttribute("aria-label", "Collapse list");
     collapseIcon.appendChild(createCollapseIcon());
     issuesHeader.createEl("h4", { text: "Files with results", cls: "seo-issues-header" });
@@ -3841,10 +4097,10 @@ var ResultsDisplay = class {
     });
     (0, import_obsidian4.setIcon)(sortBtn, "arrow-up-narrow-wide");
     sortBtn.addEventListener("click", onShowSortMenu);
-    const filesListContainer = issuesList.createEl("div", { cls: "seo-files-list-container" });
+    const filesListContainer = issuesList.createDiv({ cls: "seo-files-list-container" });
     const sortedFiles = this.sortFiles(issuesFiles, currentSort);
     sortedFiles.forEach((result) => {
-      const fileEl = filesListContainer.createEl("div", { cls: "seo-file-issue" });
+      const fileEl = filesListContainer.createDiv({ cls: "seo-file-issue" });
       fileEl.setAttribute("data-file-path", result.file);
       const fileLink = fileEl.createEl("a", {
         text: result.displayName || getDisplayPath(result.file),
@@ -3857,12 +4113,12 @@ var ResultsDisplay = class {
           await this.onFileClick(result.file);
         })();
       });
-      const statsContainer = fileEl.createEl("div", { cls: "seo-stats-container" });
+      const statsContainer = fileEl.createDiv({ cls: "seo-stats-container" });
       const statsText = [];
       if (result.issuesCount > 0) statsText.push(`${result.issuesCount} issues`);
       if (result.warningsCount > 0) statsText.push(`${result.warningsCount} warnings`);
       if (showNotices && result.noticesCount > 0) statsText.push(`${result.noticesCount} notices`);
-      statsContainer.createEl("span", {
+      statsContainer.createSpan({
         text: statsText.join(", "),
         cls: "seo-file-stats"
       });
@@ -3912,23 +4168,23 @@ var ResultsDisplay = class {
       return !hasIssues && !hasWarnings;
     });
     if (passingFiles.length === 0) return;
-    const passingList = this.container.createEl("div", { cls: "seo-issues-list" });
-    const passingHeader = passingList.createEl("div", { cls: "seo-issues-header-container" });
-    const collapseIcon = passingHeader.createEl("span", { cls: "seo-collapse-icon seo-collapsible-header" });
+    const passingList = this.container.createDiv({ cls: "seo-issues-list" });
+    const passingHeader = passingList.createDiv({ cls: "seo-issues-header-container" });
+    const collapseIcon = passingHeader.createSpan({ cls: "seo-collapse-icon seo-collapsible-header" });
     collapseIcon.setAttribute("aria-label", "Expand list");
     collapseIcon.appendChild(createCollapseIcon());
     const icon = collapseIcon.querySelector("svg");
     if (icon) {
       icon.classList.add("seo-collapse-icon-rotated");
     }
-    const headingContainer = passingHeader.createEl("div", { cls: "seo-heading-center" });
+    const headingContainer = passingHeader.createDiv({ cls: "seo-heading-center" });
     headingContainer.createEl("h4", { text: "Files that pass", cls: "seo-issues-header" });
-    const filesListContainer = passingList.createEl("div", {
+    const filesListContainer = passingList.createDiv({
       cls: "seo-files-list-container seo-results-list-collapsed"
     });
     const sortedFiles = this.sortFiles(passingFiles, currentSort);
     sortedFiles.forEach((result) => {
-      const fileEl = filesListContainer.createEl("div", { cls: "seo-file-issue" });
+      const fileEl = filesListContainer.createDiv({ cls: "seo-file-issue" });
       fileEl.setAttribute("data-file-path", result.file);
       const fileLink = fileEl.createEl("a", {
         text: result.displayName || getDisplayPath(result.file),
@@ -3941,9 +4197,9 @@ var ResultsDisplay = class {
           await this.onFileClick(result.file);
         })();
       });
-      const statsContainer = fileEl.createEl("div", { cls: "seo-stats-container" });
+      const statsContainer = fileEl.createDiv({ cls: "seo-stats-container" });
       if (showNotices && result.noticesCount > 0) {
-        statsContainer.createEl("span", {
+        statsContainer.createSpan({
           text: `${result.noticesCount} notices`,
           cls: "seo-file-stats"
         });
@@ -4293,8 +4549,8 @@ var PanelRenderer = class {
     try {
       containerEl.empty();
       containerEl.addClass("seo-panel");
-      const header = containerEl.createEl("div", { cls: "seo-panel-header" });
-      const headerRow = header.createEl("div", { cls: "seo-panel-header-row" });
+      const header = containerEl.createDiv({ cls: "seo-panel-header" });
+      const headerRow = header.createDiv({ cls: "seo-panel-header-row" });
       headerRow.createEl("h2", { text: panelType === "current" ? "SEO audit: current note" : "SEO audit: vault" });
       if (panelType === "global" && globalResults.length > 0) {
         this.renderHeaderIcons(headerRow, "global", globalResults, null);
@@ -4322,7 +4578,7 @@ var PanelRenderer = class {
       } else {
         const fileCount = globalResults.length;
         const foldersInfo = getVaultFoldersInfo(this.plugin.settings.scanDirectories, fileCount);
-        const foldersEl = header.createEl("div", { cls: "seo-filename" });
+        const foldersEl = header.createDiv({ cls: "seo-filename" });
         foldersEl.textContent = foldersInfo;
       }
       if (panelType === "current") {
@@ -4334,13 +4590,13 @@ var PanelRenderer = class {
         if (globalResults.length > 0) {
           this.renderGlobalResults(containerEl, globalResults);
         } else {
-          const noGlobal = containerEl.createEl("div", { cls: "seo-no-results" });
+          const noGlobal = containerEl.createDiv({ cls: "seo-no-results" });
           noGlobal.createEl("p", { text: 'Click "Audit all notes" to audit your files in your configured directories.' });
         }
       }
     } catch (error) {
       console.error("Error rendering SEO panel:", error);
-      containerEl.createEl("div", { text: "Error loading SEO panel. Please try again." });
+      containerEl.createDiv({ text: "Error loading SEO panel. Please try again." });
     }
   }
   /**
@@ -4349,7 +4605,7 @@ var PanelRenderer = class {
   renderCurrentNoteHeader(header, currentNoteResults) {
     const activeFile = this.app.workspace.getActiveFile();
     if (activeFile && isSupportedFile(activeFile, this.plugin.settings)) {
-      const filenameEl = header.createEl("div", { cls: "seo-filename" });
+      const filenameEl = header.createDiv({ cls: "seo-filename" });
       let displayName = activeFile.path;
       if (currentNoteResults && currentNoteResults.file === activeFile.path) {
         displayName = currentNoteResults.displayName || activeFile.path;
@@ -4368,7 +4624,7 @@ var PanelRenderer = class {
    * Renders minimal header icons (download for vault; copy + download for current note).
    */
   renderHeaderIcons(headerRow, panelType, resultsForCsv, singleNoteResult) {
-    const wrap = headerRow.createEl("div", { cls: "seo-header-icon-wrap" });
+    const wrap = headerRow.createDiv({ cls: "seo-header-icon-wrap" });
     if (panelType === "current") {
       const copyBtn = wrap.createEl("button", { type: "button", cls: "clickable-icon", attr: { "aria-label": "Copy results to clipboard" } });
       (0, import_obsidian6.setIcon)(copyBtn, "lucide-copy");
@@ -4454,7 +4710,7 @@ var PanelRenderer = class {
     }
     const resultsToShow = currentNoteResults || currentFileResults;
     if (resultsToShow) {
-      const newResultsContainer = containerEl.createEl("div", { cls: "seo-results-container" });
+      const newResultsContainer = containerEl.createDiv({ cls: "seo-results-container" });
       const tempResultsDisplay = new ResultsDisplay(
         newResultsContainer,
         async (filePath) => await this.actions.openFile(filePath),
@@ -4462,7 +4718,7 @@ var PanelRenderer = class {
       );
       tempResultsDisplay.renderResults(resultsToShow);
     } else {
-      const noResults = containerEl.createEl("div", { cls: "seo-no-results" });
+      const noResults = containerEl.createDiv({ cls: "seo-no-results" });
       const fileTypeText = this.plugin.settings.enableMDXSupport ? "markdown or MDX file" : "markdown file";
       noResults.createEl("p", { text: `Open a ${fileTypeText} and click "Refresh" to audit it.` });
     }
@@ -4734,7 +4990,7 @@ var _SEOSidePanel = class _SEOSidePanel extends import_obsidian8.ItemView {
       const existingResults = this.containerEl.querySelectorAll(".seo-results-container, .seo-file-issue, .seo-issue, .seo-warning, .seo-notice, .seo-info-note, .seo-check, .seo-result, .seo-score-header, .seo-score-text, .seo-score-number, .seo-toggle-icon, .seo-collapse-icon");
       existingResults.forEach((el) => el.remove());
       if (resultsToShow) {
-        const newResultsContainer = this.containerEl.createEl("div", { cls: "seo-results-container" });
+        const newResultsContainer = this.containerEl.createDiv({ cls: "seo-results-container" });
         if (!this.resultsDisplay) {
           this.resultsDisplay = new ResultsDisplay(
             newResultsContainer,
@@ -4746,7 +5002,7 @@ var _SEOSidePanel = class _SEOSidePanel extends import_obsidian8.ItemView {
         }
         this.resultsDisplay.renderResults(resultsToShow);
       } else {
-        this.containerEl.createEl("div", {
+        this.containerEl.createDiv({
           cls: "seo-info-note seo-no-results-message",
           text: 'No SEO results available for this file. Click "Refresh" to run an audit.'
         });
@@ -4792,15 +5048,15 @@ var _SEOSidePanel = class _SEOSidePanel extends import_obsidian8.ItemView {
     const { containerEl } = this;
     containerEl.empty();
     containerEl.addClass("seo-panel");
-    const header = containerEl.createEl("div", { cls: "seo-panel-header" });
+    const header = containerEl.createDiv({ cls: "seo-panel-header" });
     header.createEl("h2", { text: this.panelType === "current" ? "SEO audit: current note" : "SEO audit: vault" });
     if (this.panelType === "global") {
       const foldersInfo = getVaultFoldersInfo(this.plugin.settings.scanDirectories);
-      const foldersEl = header.createEl("div", { cls: "seo-filename" });
+      const foldersEl = header.createDiv({ cls: "seo-filename" });
       foldersEl.textContent = foldersInfo;
     }
-    const loadingContainer = containerEl.createEl("div", { cls: "seo-loading-container" });
-    const spinnerEl = loadingContainer.createEl("div", { cls: "seo-loading-spinner" });
+    const loadingContainer = containerEl.createDiv({ cls: "seo-loading-container" });
+    const spinnerEl = loadingContainer.createDiv({ cls: "seo-loading-spinner" });
     (0, import_obsidian8.setIcon)(spinnerEl, "loader-circle");
     loadingContainer.createEl("h3", {
       text: "Running SEO audit...",
@@ -4853,12 +5109,12 @@ var _SEOSidePanel = class _SEOSidePanel extends import_obsidian8.ItemView {
       const { containerEl } = this;
       containerEl.empty();
       containerEl.addClass("seo-panel");
-      const header = containerEl.createEl("div", { cls: "seo-panel-header" });
+      const header = containerEl.createDiv({ cls: "seo-panel-header" });
       header.createEl("h2", { text: this.panelType === "current" ? "SEO audit: current note" : "SEO audit: vault" });
       if (this.panelType === "current") {
         const activeFile = this.app.workspace.getActiveFile();
         if (activeFile && isSupportedFile(activeFile, this.plugin.settings)) {
-          const filenameEl = header.createEl("div", { cls: "seo-filename" });
+          const filenameEl = header.createDiv({ cls: "seo-filename" });
           let displayName = activeFile.path;
           if (this.currentNoteResults && this.currentNoteResults.file === activeFile.path) {
             displayName = this.currentNoteResults.displayName || activeFile.path;
@@ -4875,7 +5131,7 @@ var _SEOSidePanel = class _SEOSidePanel extends import_obsidian8.ItemView {
       } else {
         const fileCount = this.globalResults.length;
         const foldersInfo = getVaultFoldersInfo(this.plugin.settings.scanDirectories, fileCount);
-        const foldersEl = header.createEl("div", { cls: "seo-filename" });
+        const foldersEl = header.createDiv({ cls: "seo-filename" });
         foldersEl.textContent = foldersInfo;
       }
       if (this.panelType === "current") {
@@ -4927,7 +5183,7 @@ var _SEOSidePanel = class _SEOSidePanel extends import_obsidian8.ItemView {
         }
         const resultsToShow = this.currentNoteResults || currentFileResults;
         if (resultsToShow) {
-          const newResultsContainer = this.containerEl.createEl("div", { cls: "seo-results-container" });
+          const newResultsContainer = this.containerEl.createDiv({ cls: "seo-results-container" });
           const tempResultsDisplay = new ResultsDisplay(
             newResultsContainer,
             async (filePath) => await this.actions.openFile(filePath),
@@ -4935,7 +5191,7 @@ var _SEOSidePanel = class _SEOSidePanel extends import_obsidian8.ItemView {
           );
           tempResultsDisplay.renderResults(resultsToShow);
         } else {
-          const noResults = containerEl.createEl("div", { cls: "seo-no-results" });
+          const noResults = containerEl.createDiv({ cls: "seo-no-results" });
           const fileTypeText = this.plugin.settings.enableMDXSupport ? "markdown or MDX file" : "markdown file";
           noResults.createEl("p", { text: `Open a ${fileTypeText} and click "Refresh" to audit it.` });
         }
@@ -4943,13 +5199,13 @@ var _SEOSidePanel = class _SEOSidePanel extends import_obsidian8.ItemView {
         if (this.globalResults.length > 0) {
           this.renderGlobalResults(containerEl);
         } else {
-          const noGlobal = containerEl.createEl("div", { cls: "seo-no-results" });
+          const noGlobal = containerEl.createDiv({ cls: "seo-no-results" });
           noGlobal.createEl("p", { text: 'Click "Audit all notes" to audit your files in your configured directories.' });
         }
       }
     } catch (error) {
       console.error("Error rendering SEO panel:", error);
-      this.containerEl.createEl("div", { text: "Error loading SEO panel. Please try again." });
+      this.containerEl.createDiv({ text: "Error loading SEO panel. Please try again." });
     }
   }
   shouldIncludeFileInGlobalResults(filePath) {
@@ -5019,7 +5275,7 @@ var _SEOSidePanel = class _SEOSidePanel extends import_obsidian8.ItemView {
     const existingResults = this.containerEl.querySelectorAll(".seo-results-container, .seo-file-issue, .seo-issue, .seo-warning, .seo-notice, .seo-info-note, .seo-check, .seo-result, .seo-score-header, .seo-score-text, .seo-score-number, .seo-toggle-icon, .seo-collapse-icon");
     existingResults.forEach((el) => el.remove());
     if (resultsToShow) {
-      const newResultsContainer = this.containerEl.createEl("div", { cls: "seo-results-container" });
+      const newResultsContainer = this.containerEl.createDiv({ cls: "seo-results-container" });
       const tempResultsDisplay = new ResultsDisplay(
         newResultsContainer,
         async (filePath) => await this.actions.openFile(filePath),
@@ -5027,7 +5283,7 @@ var _SEOSidePanel = class _SEOSidePanel extends import_obsidian8.ItemView {
       );
       tempResultsDisplay.renderResults(resultsToShow);
     } else {
-      const noResults = this.containerEl.createEl("div", { cls: "seo-no-results" });
+      const noResults = this.containerEl.createDiv({ cls: "seo-no-results" });
       noResults.createEl("p", { text: 'Open a markdown file and click "Refresh" to audit it.' });
     }
   }

@@ -1088,6 +1088,7 @@ var WizardStateManager = class {
       enableEditingToolbar: (_c = (_b = settings.enableEditingToolbar) != null ? _b : settings.enableWYSIWYG) != null ? _c : false,
       enableMdxSupport: settings.enableMdxSupport,
       enableExtendedFileTypes: settings.enableExtendedFileTypes,
+      deploymentPlatform: settings.deploymentPlatform || "",
       enabledPlugins: settings.enabledPlugins || [],
       disabledPlugins: settings.disabledPlugins || [],
       theme: settings.theme || "",
@@ -1192,6 +1193,7 @@ var WizardStateManager = class {
     }
     this.state.enableMdxSupport = settings.enableMdxSupport;
     this.state.enableExtendedFileTypes = settings.enableExtendedFileTypes;
+    this.state.deploymentPlatform = settings.deploymentPlatform || "";
     this.state.enabledPlugins = settings.enabledPlugins || [];
     this.state.disabledPlugins = settings.disabledPlugins || [];
     this.state.theme = settings.theme || "";
@@ -1281,6 +1283,7 @@ var WizardStateManager = class {
     }
     settings.enableMdxSupport = (_d = this.state.enableMdxSupport) != null ? _d : false;
     settings.enableExtendedFileTypes = (_e = this.state.enableExtendedFileTypes) != null ? _e : false;
+    settings.deploymentPlatform = this.state.deploymentPlatform || "";
     settings.enabledPlugins = this.state.enabledPlugins;
     settings.disabledPlugins = this.state.disabledPlugins;
     settings.theme = this.state.theme;
@@ -1768,6 +1771,87 @@ var ContentTypeDetector = class {
   }
 };
 
+// src/utils/VaultNicknameConfig.ts
+var VaultNicknameConfigurator = class {
+  constructor(app) {
+    this.pluginId = "vault-nickname";
+    this.sharedFileName = "data-shared.json";
+    this.app = app;
+  }
+  /** The currently saved nickname (empty string when none is set). */
+  async getNickname() {
+    const live = this.livePlugin();
+    if ((live == null ? void 0 : live.sharedSettings) && typeof live.sharedSettings.nickname === "string") {
+      return live.sharedSettings.nickname;
+    }
+    const data = await this.readShared();
+    const nickname = data["nickname"];
+    return typeof nickname === "string" ? nickname : "";
+  }
+  /** Save the nickname; a blank value falls back to the vault's folder name. */
+  async saveNickname(nickname) {
+    const value = nickname.trim();
+    const live = this.livePlugin();
+    if ((live == null ? void 0 : live.sharedSettings) && typeof live.saveSettings === "function") {
+      live.sharedSettings.nickname = value;
+      if (live.settings && "nickname" in live.settings) {
+        delete live.settings["nickname"];
+      }
+      await live.saveSettings();
+      return;
+    }
+    const shared = await this.readShared();
+    shared["nickname"] = value;
+    await this.writeShared(shared);
+    await this.cleanupStrayDataJsonKey();
+  }
+  livePlugin() {
+    var _a, _b;
+    return (_b = (_a = this.app.plugins) == null ? void 0 : _a.plugins) == null ? void 0 : _b[this.pluginId];
+  }
+  pluginDir() {
+    return `${this.app.vault.configDir}/plugins/${this.pluginId}`;
+  }
+  sharedPath() {
+    return `${this.pluginDir()}/${this.sharedFileName}`;
+  }
+  async readShared() {
+    return this.readJson(this.sharedPath());
+  }
+  async writeShared(data) {
+    const adapter = this.app.vault.adapter;
+    const dir = this.pluginDir();
+    if (!await adapter.exists(dir)) {
+      await adapter.mkdir(dir);
+    }
+    await adapter.write(this.sharedPath(), JSON.stringify(data, null, 2));
+  }
+  /** Remove the nickname key an earlier version mistakenly wrote to data.json. */
+  async cleanupStrayDataJsonKey() {
+    const path13 = `${this.pluginDir()}/data.json`;
+    const adapter = this.app.vault.adapter;
+    if (!await adapter.exists(path13)) {
+      return;
+    }
+    const data = await this.readJson(path13);
+    if ("nickname" in data) {
+      delete data["nickname"];
+      await adapter.write(path13, JSON.stringify(data, null, 2));
+    }
+  }
+  async readJson(path13) {
+    const adapter = this.app.vault.adapter;
+    if (await adapter.exists(path13)) {
+      try {
+        return JSON.parse(await adapter.read(path13));
+      } catch (error) {
+        console.warn("VaultNicknameConfig: could not parse", path13, error);
+      }
+    }
+    return {};
+  }
+};
+
 // src/ui/wizard/ProjectDetectionStep.ts
 init_VaultPathHelper();
 function setCssProps2(element, props) {
@@ -1784,6 +1868,19 @@ var ProjectDetectionStep = class extends BaseWizardStep {
     this.projectDetector = new ProjectDetector(app);
     this.mdxDetector = new MdxDetector(app);
     this.contentTypeDetector = new ContentTypeDetector(app);
+    this.vaultNicknameConfigurator = new VaultNicknameConfigurator(app);
+  }
+  /** Renders the optional vault nickname field, seeding from the saved value the first time the step is shown. */
+  async renderVaultNicknameSetting(containerEl) {
+    if (this.state.vaultNickname === void 0) {
+      this.state.vaultNickname = await this.vaultNicknameConfigurator.getNickname();
+    }
+    new import_obsidian6.Setting(containerEl).setName("Vault nickname").setDesc("Display name for this vault, shown instead of the folder name. Leave blank to keep the folder name.").addText((text) => {
+      var _a;
+      return text.setPlaceholder("Vault CMS").setValue((_a = this.state.vaultNickname) != null ? _a : "").onChange((value) => {
+        this.state.vaultNickname = value;
+      });
+    });
   }
   async display() {
     var _a, _b, _c, _d, _e, _f;
@@ -1925,6 +2022,7 @@ var ProjectDetectionStep = class extends BaseWizardStep {
           this.state.enableExtendedFileTypes = value;
         });
       });
+      await this.renderVaultNicknameSetting(containerEl);
     } else {
       containerEl.empty();
       containerEl.createEl("h2", { text: "Project detection failed" });
@@ -3085,7 +3183,7 @@ var ContentTypeStep = class extends BaseWizardStep {
     }));
     attachmentExtraSlot = stepContentWrapper.createDiv({ cls: "vault-cms-attachment-extra-slot" });
     this.renderAttachmentExtraSlot(attachmentExtraSlot);
-    new import_obsidian8.Setting(stepContentWrapper).setName("Resolve cover images from public folder").setDesc("Enable this if your theme uses absolute image paths (like /images/photo.jpg) that reference the Astro project's public/ folder. This lets banners and card thumbnails display correctly in Obsidian.").addToggle((toggle) => {
+    new import_obsidian8.Setting(stepContentWrapper).setName("Resolve cover images from project folders").setDesc("Enable this if your content uses absolute image paths (like /images/photo.jpg) that map to an image folder in your project. Searches public/, src/assets/, static/, and assets/. This lets banners and card thumbnails display correctly in Obsidian, even when the build pipeline (e.g. Astro's src/assets) optimizes the images at build time.").addToggle((toggle) => {
       var _a2;
       return toggle.setValue((_a2 = this.state.resolvePublicImages) != null ? _a2 : false).onChange((value) => {
         this.state.resolvePublicImages = value;
@@ -9892,6 +9990,7 @@ var FrontmatterPropertiesStep = class extends BaseWizardStep {
     this.frontmatterAnalyzer = new FrontmatterAnalyzer(app);
   }
   async display() {
+    var _a;
     const { containerEl } = this;
     const existingWrapper = containerEl.querySelector(".frontmatter-step-content");
     if (existingWrapper) {
@@ -9946,7 +10045,7 @@ var FrontmatterPropertiesStep = class extends BaseWizardStep {
         const detectedDesc = this.frontmatterAnalyzer.autoDetectDescriptionProperty(dummyFrontmatter, example == null ? void 0 : example.frontmatter);
         const detectedTitle = this.frontmatterAnalyzer.autoDetectTitleProperty(dummyFrontmatter);
         const detectedDate = this.frontmatterAnalyzer.autoDetectDateProperty(dummyFrontmatter);
-        const useDraftProperty = hasUnderscoreFiles ? void 0 : detectedDraft == null ? void 0 : detectedDraft.property;
+        const useDraftProperty = (_a = detectedDraft == null ? void 0 : detectedDraft.property) != null ? _a : void 0;
         this.state.frontmatterProperties[contentType.id] = {
           titleProperty: detectedTitle || void 0,
           dateProperty: detectedDate || void 0,
@@ -10039,11 +10138,11 @@ var FrontmatterPropertiesStep = class extends BaseWizardStep {
         props.hasDraftStatus = !!props.draftProperty;
       }
       draftSetting.addToggle((toggle) => {
-        var _a;
-        return toggle.setValue((_a = props.hasDraftStatus) != null ? _a : !!props.draftProperty).onChange((value) => {
+        var _a2;
+        return toggle.setValue((_a2 = props.hasDraftStatus) != null ? _a2 : !!props.draftProperty).onChange((value) => {
           props.hasDraftStatus = value;
           if (value && !props.draftProperty) {
-            const detectedDraft = !hasUnderscoreFiles && example ? this.frontmatterAnalyzer.autoDetectDraftProperty(example.frontmatter) : null;
+            const detectedDraft = example ? this.frontmatterAnalyzer.autoDetectDraftProperty(example.frontmatter) : null;
             props.draftProperty = detectedDraft == null ? void 0 : detectedDraft.property;
             if (props.draftProperty) {
               if (props.draftProperty === "published") {
@@ -10574,7 +10673,6 @@ var PluginManager = class {
       "homepage",
       "new-tab-default-page",
       "property-over-file-name",
-      "settings-search",
       "statusbar-organizer",
       "seo",
       "ui-tweaker",
@@ -10645,13 +10743,13 @@ var OptionalPluginsStep = class extends BaseWizardStep {
       { id: "home-base", name: "Home Base", category: "essential", source: "community" },
       { id: "image-manager", name: "Image Manager", category: "essential", source: "community" },
       { id: "property-over-file-name", name: "Property Over File Name", category: "essential", source: "community" },
-      { id: "seo", name: "SEO", category: "essential", source: "community" },
+      { id: "seo", name: "Search Engine Optimization", category: "essential", source: "community" },
       { id: "ui-tweaker", name: "UI Tweaker", category: "essential", source: "community" },
       // Nice to have: also all in the official community directory.
       { id: "omnisearch", name: "Omnisearch", category: "nice-to-have", source: "community" },
       { id: "file-name-history", name: "File Name History", category: "nice-to-have", source: "community" },
-      { id: "data-files-editor", name: "Data Files Editor", category: "nice-to-have", source: "community" },
-      { id: "settings-search", name: "Settings Search", category: "nice-to-have", source: "community" },
+      { id: "data-files-editor", name: "Data Files Editor", category: "nice-to-have", source: "brat", repo: "davidvkimball/obsidian-data-files-editor" },
+      { id: "link-as", name: "Link As", category: "nice-to-have", source: "community" },
       { id: "tag-wrangler", name: "Tag Wrangler", category: "nice-to-have", source: "community" },
       { id: "vault-nickname", name: "Vault Nickname", category: "nice-to-have", source: "community" },
       { id: "zenmode", name: "Zen Mode", category: "nice-to-have", source: "community" },
@@ -10713,8 +10811,8 @@ var OptionalPluginsStep = class extends BaseWizardStep {
               window.open(`obsidian://show-plugin?id=${plugin.id}`);
             }));
           } else if (plugin.source === "brat" && plugin.repo) {
-            setting.addButton((btn) => btn.setButtonText("GitHub").onClick(() => {
-              window.open(`https://github.com/${plugin.repo}`);
+            setting.addButton((btn) => btn.setButtonText("Install via BRAT").setCta().onClick(() => {
+              window.open(`obsidian://brat?plugin=${plugin.repo}`);
             }));
           }
         }
@@ -10855,29 +10953,16 @@ var ProjectOptimizer = class {
     return status;
   }
   /**
-   * Returns the absolute paths of GitHub automation files we offer to remove
-   * before the initial push. Currently:
+   * Returns the absolute path(s) of the project's Dependabot config
+   * (`.github/dependabot.yml` or `.yaml`), which we offer to remove because
+   * it auto-creates dependency-bump pull requests as soon as the repo is on
+   * GitHub.
    *
-   *   - All `.yml`/`.yaml` files inside `.github/workflows/`
-   *   - `.github/dependabot.yml` (or `.yaml`)
-   *
-   * Issue templates, PR templates, CODEOWNERS, and FUNDING.yml are NOT
-   * included — they don't block the initial push or auto-create PRs.
+   * Workflow files (`.github/workflows/*.yml`), issue templates, PR
+   * templates, CODEOWNERS, and FUNDING.yml are NOT touched.
    */
   listGithubAutomationFiles(projectRoot) {
     const files = [];
-    const workflowsDir = path8.join(projectRoot, ".github", "workflows");
-    if (fs5.existsSync(workflowsDir)) {
-      try {
-        for (const name of fs5.readdirSync(workflowsDir)) {
-          if (/\.ya?ml$/i.test(name)) {
-            files.push(path8.join(workflowsDir, name));
-          }
-        }
-      } catch (e) {
-        console.debug("[Vault CMS] Could not list workflows dir:", e);
-      }
-    }
     for (const name of ["dependabot.yml", "dependabot.yaml"]) {
       const dependabotPath = path8.join(projectRoot, ".github", name);
       if (fs5.existsSync(dependabotPath)) files.push(dependabotPath);
@@ -10885,10 +10970,8 @@ var ProjectOptimizer = class {
     return files;
   }
   /**
-   * Removes the GitHub automation files listed by `listGithubAutomationFiles`.
-   * Cleans up `.github/workflows/` if it ends up empty. Other `.github/`
-   * contents (issue templates, PR template, CODEOWNERS, FUNDING.yml, etc.)
-   * are left untouched.
+   * Removes the Dependabot config listed by `listGithubAutomationFiles`.
+   * Workflow files and all other `.github/` contents are left untouched.
    *
    * Returns the count of files removed.
    */
@@ -10902,16 +10985,7 @@ var ProjectOptimizer = class {
         fs5.unlinkSync(filePath);
         removed++;
       } catch (e) {
-        console.error("[Vault CMS] Failed to remove automation file:", filePath, e);
-      }
-    }
-    const workflowsDir = path8.join(projectRoot, ".github", "workflows");
-    if (fs5.existsSync(workflowsDir)) {
-      try {
-        const remaining = fs5.readdirSync(workflowsDir);
-        if (remaining.length === 0) fs5.rmdirSync(workflowsDir);
-      } catch (e) {
-        console.debug("[Vault CMS] Could not remove empty workflows dir:", e);
+        console.error("[Vault CMS] Failed to remove Dependabot config:", filePath, e);
       }
     }
     return removed;
@@ -11261,20 +11335,20 @@ var IgnoreStep = class extends BaseWizardStep {
   }
   updateWorkflowsSetting(status, files) {
     const basenames = files.map((p) => p.replace(/\\/g, "/").split("/").pop()).filter(Boolean);
-    const fileList = basenames.length > 0 ? basenames.slice(0, 4).join(", ") + (basenames.length > 4 ? `, +${basenames.length - 4} more` : "") : "";
-    this.workflowsSetting.setName("Remove GitHub automation files").setDesc(
-      `This project ships GitHub automation files (${fileList || "workflows, dependabot.yml"}). GitHub Actions workflow files require a special "workflow" PAT scope to push. Dependabot auto-creates dependency-bump pull requests as soon as the repo is on GitHub. Removing them gives you a clean initial push and an empty PR list. Issue templates, PR template, CODEOWNERS, and FUNDING.yml are kept.`
+    const fileList = basenames.length > 0 ? basenames.join(", ") : "dependabot.yml";
+    this.workflowsSetting.setName("Remove Dependabot config").setDesc(
+      `This project ships a Dependabot config (${fileList}), which auto-creates dependency-bump pull requests as soon as the repo is on GitHub. Removing it gives you an empty PR list. GitHub Actions workflows are left in place, since they can be genuine features (like media optimization); push them with a PAT that has the "workflow" scope, which the token link in the Git step pre-selects for you.`
     ).clear();
     if (status === "detected") {
       this.workflowsSetting.addButton((button) => {
         button.setButtonText("Remove").setWarning().onClick(async () => {
           try {
             const removed = this.optimizer.removeGithubAutomation();
-            new import_obsidian14.Notice(`Removed ${removed} GitHub automation file${removed === 1 ? "" : "s"}`);
+            new import_obsidian14.Notice(`Removed Dependabot config (${removed} file${removed === 1 ? "" : "s"})`);
             const newStatus = await this.optimizer.getStatus();
             this.updateWorkflowsSetting(newStatus.githubAutomationStatus, newStatus.githubAutomationFiles);
           } catch (error) {
-            new import_obsidian14.Notice(`Failed to remove GitHub automation files: ${error instanceof Error ? error.message : String(error)}`);
+            new import_obsidian14.Notice(`Failed to remove Dependabot config: ${error instanceof Error ? error.message : String(error)}`);
           }
         });
       });
@@ -12014,24 +12088,29 @@ var DataFilesEditorConfigurator = class {
     settings.doCreateJson = enabled;
     settings.doLoadAstro = enabled;
     settings.doCreateAstro = enabled;
-    settings.doLoadTxt = false;
-    settings.doCreateTxt = false;
-    settings.doLoadXml = false;
-    settings.doCreateXml = false;
-    settings.doLoadYaml = false;
-    settings.doCreateYaml = false;
-    settings.doLoadTs = false;
-    settings.doCreateTs = false;
-    settings.doLoadCss = false;
-    settings.doCreateCss = false;
-    settings.doLoadHtml = false;
-    settings.doCreateHtml = false;
-    settings.doLoadJs = false;
-    settings.doCreateJs = false;
-    settings.doLoadMjs = false;
-    settings.doCreateMjs = false;
-    settings.doAutosaveFiles = true;
-    settings.lineWrapping = true;
+    const otherKeys = [
+      "doLoadTxt",
+      "doCreateTxt",
+      "doLoadXml",
+      "doCreateXml",
+      "doLoadYaml",
+      "doCreateYaml",
+      "doLoadTs",
+      "doCreateTs",
+      "doLoadCss",
+      "doCreateCss",
+      "doLoadHtml",
+      "doCreateHtml",
+      "doLoadJs",
+      "doCreateJs",
+      "doLoadMjs",
+      "doCreateMjs"
+    ];
+    for (const key of otherKeys) {
+      if (settings[key] === void 0) settings[key] = false;
+    }
+    if (settings.doAutosaveFiles === void 0) settings.doAutosaveFiles = true;
+    if (settings.lineWrapping === void 0) settings.lineWrapping = true;
   }
   async saveConfigFallback(enabled) {
     const pluginId = "data-files-editor";
@@ -12111,6 +12190,7 @@ var ConfigFlushService = class {
     this.homeBaseConfigurator = new HomeBaseConfigurator(app);
     this.explorerFocusConfigurator = new ExplorerFocusConfigurator(app);
     this.dataFilesEditorConfigurator = new DataFilesEditorConfigurator(app);
+    this.vaultNicknameConfigurator = new VaultNicknameConfigurator(app);
     this.editingToolbarConfigurator = new EditingToolbarConfigurator(app);
     this.fileNameHistoryConfigurator = new FileNameHistoryConfigurator(app);
   }
@@ -12120,7 +12200,7 @@ var ConfigFlushService = class {
    * needing to reach the finalization step.
    */
   async flush(state) {
-    var _a, _b;
+    var _a, _b, _c;
     console.debug("ConfigFlushService: Starting configuration flush");
     await this.basesCMSConfigurator.createOrUpdateBaseFile(
       state.contentTypes,
@@ -12201,6 +12281,7 @@ var ConfigFlushService = class {
     }
     await this.editingToolbarConfigurator.toggleVisibility(this.app, state.enableEditingToolbar);
     await this.dataFilesEditorConfigurator.saveConfig(state.enableExtendedFileTypes === true);
+    await this.vaultNicknameConfigurator.saveNickname((_c = state.vaultNickname) != null ? _c : "");
     console.debug("ConfigFlushService: Configuration flush complete");
   }
 };
@@ -12289,7 +12370,10 @@ var DeploymentStep = class extends BaseWizardStep {
     containerEl.createEl("p", {
       text: "Choose where you want to host your site. A config file will be created for your chosen platform."
     });
-    this.selectedPlatform = this.state.deploymentPlatform || "";
+    this.selectedPlatform = this.state.deploymentPlatform || this.detectConfiguredPlatform();
+    if (this.selectedPlatform) {
+      this.state.deploymentPlatform = this.selectedPlatform;
+    }
     const platforms = this.getPlatforms();
     for (const platform of platforms) {
       const setting = new import_obsidian20.Setting(containerEl);
@@ -12310,6 +12394,27 @@ var DeploymentStep = class extends BaseWizardStep {
         });
       });
     }
+  }
+  /**
+   * Detect a platform whose config file already exists in the project root.
+   * Used as a fallback so a previously configured vault still shows as
+   * selected even when no choice was persisted, and we never overwrite or
+   * regenerate the existing config file.
+   */
+  detectConfiguredPlatform() {
+    const projectRoot = this.getAbsoluteProjectRoot();
+    if (!projectRoot) return "";
+    try {
+      const fs7 = require("fs");
+      for (const platform of this.getPlatforms()) {
+        if (!platform.configFile) continue;
+        if (fs7.existsSync(path10.join(projectRoot, platform.configFile))) {
+          return platform.id;
+        }
+      }
+    } catch (e) {
+    }
+    return "";
   }
   async generateConfigFile(filename, content) {
     const projectRoot = this.getAbsoluteProjectRoot();
@@ -14110,6 +14215,194 @@ var SettingsTab = class extends import_obsidian27.PluginSettingTab {
     this.icon = "lucide-vault";
     this.plugin = plugin;
   }
+  // 1.13.0+: framework calls this and skips display().
+  // Pre-1.13.0: this method is not invoked; display() below runs as before.
+  // See https://docs.obsidian.md/plugins/guides/migrate-declarative-settings
+  //
+  // This must stay cheap and synchronous (no I/O) because the framework runs
+  // it on every update() and once at registration for search indexing. The
+  // Git status and project optimization rows depend on async disk reads, so
+  // they are produced inside render callbacks that kick off the work the same
+  // way display()/render() does, rather than being resolved here.
+  getSettingDefinitions() {
+    return [
+      {
+        // First group (no heading) - following UI Tweaker pattern
+        type: "group",
+        items: [
+          {
+            name: "Open setup wizard",
+            desc: "Launch the setup wizard",
+            // Render: this is an action (opens a modal), not a value bind.
+            render: (setting) => {
+              setting.addButton((button) => {
+                button.setButtonText("Open wizard").setCta().onClick(() => {
+                  new SetupWizardModal(this.app, this.plugin.settings, this.plugin).open();
+                });
+              });
+            }
+          },
+          {
+            name: "Run wizard on startup",
+            desc: "Automatically open the wizard when the plugin loads",
+            control: { type: "toggle", key: "runWizardOnStartup" }
+          },
+          {
+            name: "Health check",
+            desc: "Check plugin installation and configuration status",
+            // Render: this is an action (opens a modal), not a value bind.
+            render: (setting) => {
+              setting.addButton((button) => {
+                button.setButtonText("Run health check").onClick(() => {
+                  new HealthCheckModal(this.app, this.plugin).open();
+                });
+              });
+            }
+          }
+        ]
+      },
+      {
+        type: "group",
+        heading: "Preset configuration",
+        items: [
+          {
+            name: "Preset folder name",
+            desc: "Folder name in the repository",
+            control: { type: "text", key: "presetName", placeholder: "Example: starlight" }
+          },
+          {
+            name: "Presets repository",
+            desc: "GitHub repository containing the presets",
+            control: { type: "text", key: "presetsRepo", placeholder: "Example: owner/repo" }
+          },
+          {
+            name: "Download and apply preset",
+            desc: "Download the specified preset and apply it to your vault",
+            // Render: this is an action (runs the preset manager), not a value bind.
+            render: (setting) => {
+              setting.addButton((button) => {
+                button.setButtonText("Apply preset").onClick(async () => {
+                  const manager = new PresetManager(this.app);
+                  await manager.applyPreset(this.plugin.settings.presetsRepo, this.plugin.settings.presetName);
+                });
+              });
+            }
+          }
+        ]
+      },
+      {
+        type: "group",
+        heading: "Git configuration",
+        items: [
+          {
+            name: "Deployment and Git setup",
+            desc: "Choose a deployment platform and connect to GitHub.",
+            // Render: the status rows and setup button depend on async Git
+            // reads. This callback reproduces display()'s Git section by
+            // running the same checks and rebuilding its own setting.
+            render: (setting) => {
+              void this.renderGitConfiguration(setting);
+            }
+          }
+        ]
+      },
+      {
+        type: "group",
+        heading: "Project optimization (optional)",
+        items: [
+          {
+            name: "Project optimization",
+            desc: "Optional adjustments to ignore workspace files and neutralize blockers.",
+            // Render: optimization status depends on async disk reads. This
+            // callback reproduces display()'s optimization section by running
+            // the same checks and rebuilding its own setting(s).
+            render: (setting) => {
+              void this.renderProjectOptimization(setting);
+            }
+          }
+        ]
+      }
+    ];
+  }
+  // Async builder for the declarative Git configuration group. Mirrors the
+  // Git section of render(): reports local repository status, project root
+  // path, remote URL, and the "Setup..." button when not fully configured.
+  async renderGitConfiguration(setting) {
+    var _a;
+    const container = (_a = setting.settingEl.parentElement) != null ? _a : setting.settingEl;
+    setting.settingEl.remove();
+    let isFullyConfigured = false;
+    if (this.plugin.settings.projectRoot && this.plugin.settings.projectRoot.trim() !== "") {
+      try {
+        const { GitManager: GitManager2 } = await Promise.resolve().then(() => (init_GitManager(), GitManager_exports));
+        const { resolveProjectRoot: resolveProjectRoot3 } = await Promise.resolve().then(() => (init_ProjectRootResolver(), ProjectRootResolver_exports));
+        const projectRoot = resolveProjectRoot3(this.app, this.plugin.settings.projectRoot);
+        if (!projectRoot) throw new Error("Could not resolve project root");
+        const isRepo = await GitManager2.isRepo(projectRoot);
+        const remoteUrl = isRepo ? await GitManager2.getRemoteUrl(projectRoot) : null;
+        isFullyConfigured = isRepo && !!remoteUrl;
+        const statusSetting = new import_obsidian27.Setting(container).setName("Local repository status").setDesc(isRepo ? "Git is initialized at project root." : "Git is NOT initialized at project root.");
+        const statusIcon = statusSetting.controlEl.createSpan({
+          cls: isRepo ? "git-status-icon-ok" : "git-status-icon-warn",
+          attr: { style: `margin-left: 10px; color: ${isRepo ? "var(--text-success)" : "var(--text-warning)"};` }
+        });
+        statusIcon.setText(isRepo ? "\u2713 Detected" : "\u26A0 Missing");
+        new import_obsidian27.Setting(container).setName("Project root path").setDesc("Direct path being checked for Git").addText((text) => {
+          text.setValue(projectRoot).setDisabled(true);
+        });
+        if (remoteUrl) {
+          new import_obsidian27.Setting(container).setName("Remote URL").setDesc("Connected GitHub repository").addText((text) => {
+            text.setValue(remoteUrl).setDisabled(true);
+          });
+        }
+      } catch (error) {
+        console.warn("SettingsTab: Failed to check Git status:", error);
+      }
+    }
+    if (!isFullyConfigured) {
+      new import_obsidian27.Setting(container).setName("Deployment and Git setup").setDesc("Choose a deployment platform and connect to GitHub.").addButton((button) => {
+        button.setButtonText("Setup...").onClick(() => {
+          const modal = new SetupWizardModal(this.app, { currentStep: 7 }, this.plugin);
+          modal.open();
+        });
+      });
+    }
+  }
+  // Async builder for the declarative project optimization group. Mirrors the
+  // optimization section of render(): Git ignore, Vite ignore, optional git
+  // hooks neutralization, and optional GitHub automation removal.
+  async renderProjectOptimization(setting) {
+    var _a;
+    const container = (_a = setting.settingEl.parentElement) != null ? _a : setting.settingEl;
+    setting.settingEl.remove();
+    if (!this.plugin.settings.projectRoot) {
+      new import_obsidian27.Setting(container).setName("Project not detected").setDesc("Complete the setup wizard first to detect your Astro project before configuring optimizations.");
+      return;
+    }
+    const wizardState = {
+      ...this.plugin.settings,
+      currentStep: 0,
+      projectDetection: {
+        projectRoot: this.plugin.settings.projectRoot,
+        configFilePath: this.plugin.settings.configFilePath,
+        vaultLocation: "content"
+      }
+    };
+    this.optimizer = new ProjectOptimizer(this.app, wizardState);
+    const status = await this.optimizer.getStatus();
+    this.gitSetting = new import_obsidian27.Setting(container);
+    this.updateGitSetting(status.gitIgnoreStatus);
+    this.viteSetting = new import_obsidian27.Setting(container);
+    this.updateViteSetting(status.viteIgnoreStatus);
+    if (status.gitHooksStatus !== "none") {
+      this.hooksSetting = new import_obsidian27.Setting(container);
+      this.updateHooksSetting(status.gitHooksStatus);
+    }
+    if (status.githubAutomationStatus !== "none") {
+      this.workflowsSetting = new import_obsidian27.Setting(container);
+      this.updateWorkflowsSetting(status.githubAutomationStatus, status.githubAutomationFiles);
+    }
+  }
   display() {
     const { containerEl } = this;
     containerEl.empty();
@@ -14315,20 +14608,20 @@ var SettingsTab = class extends import_obsidian27.PluginSettingTab {
   }
   updateWorkflowsSetting(status, files) {
     const basenames = files.map((p) => p.replace(/\\/g, "/").split("/").pop()).filter(Boolean);
-    const fileList = basenames.length > 0 ? basenames.slice(0, 4).join(", ") + (basenames.length > 4 ? `, +${basenames.length - 4} more` : "") : "";
-    this.workflowsSetting.setName("Remove GitHub automation files").setDesc(
-      `This project ships GitHub automation files (${fileList || "workflows, dependabot.yml"}). GitHub Actions workflow files require a special "workflow" PAT scope to push. Dependabot auto-creates dependency-bump pull requests as soon as the repo is on GitHub. Removing them gives you a clean initial push and an empty PR list. Issue templates, PR template, CODEOWNERS, and FUNDING.yml are kept.`
+    const fileList = basenames.length > 0 ? basenames.join(", ") : "dependabot.yml";
+    this.workflowsSetting.setName("Remove Dependabot config").setDesc(
+      `This project ships a Dependabot config (${fileList}), which auto-creates dependency-bump pull requests as soon as the repo is on GitHub. Removing it gives you an empty PR list. GitHub Actions workflows are left in place, since they can be genuine features (like media optimization); push them with a PAT that has the "workflow" scope, which the token link in the Git step pre-selects for you.`
     ).clear();
     if (status === "detected") {
       this.workflowsSetting.addButton((button) => {
         button.setButtonText("Remove").setWarning().onClick(async () => {
           try {
             const removed = this.optimizer.removeGithubAutomation();
-            new import_obsidian27.Notice(`Removed ${removed} GitHub automation file${removed === 1 ? "" : "s"}`);
+            new import_obsidian27.Notice(`Removed Dependabot config (${removed} file${removed === 1 ? "" : "s"})`);
             const newStatus = await this.optimizer.getStatus();
             this.updateWorkflowsSetting(newStatus.githubAutomationStatus, newStatus.githubAutomationFiles);
           } catch (error) {
-            new import_obsidian27.Notice(`Failed to remove GitHub automation files: ${error instanceof Error ? error.message : String(error)}`);
+            new import_obsidian27.Notice(`Failed to remove Dependabot config: ${error instanceof Error ? error.message : String(error)}`);
           }
         });
       });
@@ -14654,8 +14947,11 @@ var VaultCMSPlugin = class extends import_obsidian28.Plugin {
   }
   /**
    * Resolve an absolute image path (e.g. /images/blog/1.jpg) against the
-   * Astro project's public/ folder. Returns a file:// resource URL if the
-   * file exists, null otherwise.
+   * project's image folders. Tries, in order: public/, src/assets/,
+   * static/, assets/ (relative to the configured project root). This means
+   * a path like /images/foo.jpg works whether the framework serves it raw
+   * from public/ OR optimizes it from a build-pipeline dir like Astro's
+   * src/assets/. Returns a file:// resource URL if found, null otherwise.
    *
    * Preserved at the top level for back-compat with consumers written
    * before the namespaced API existed (Image Manager, Bases CMS). New
