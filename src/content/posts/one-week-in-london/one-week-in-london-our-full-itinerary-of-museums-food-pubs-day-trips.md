@@ -14,7 +14,7 @@ targetKeyword: ""
 draft: false
 aliases: []
 ---
-I proudly present: THE definitive guide to all of the best activities London has to offer. Well, to be truthful, this isn't a comprehensive list, but it does contain everything we did as well as my special notes.
+I proudly present: THE definitive guide to all of the best activities London has to offer. Well, to be truthful, this isn't a comprehensive list, but it does contain everything we personally did as well as my special notes.
 
 Starting off with...
 

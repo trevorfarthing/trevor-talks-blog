@@ -1,4 +1,7 @@
-defaultView: "Posts"
+defaultView: Posts
+filters:
+  and:
+    - file.ext == "md"
 formulas:
   Slug: |-
     (
@@ -24,38 +27,32 @@ formulas:
         "root"
       )
     )
-
-filters:
-  and:
-    - file.ext == "md"
-
 properties:
-  "file.fullname":
+  file.fullname:
     displayName: Full File Name
-  "file.name":
+  file.name:
     displayName: Name
-  "formula.Slug":
+  formula.Slug:
     displayName: Path
-  "note.date":
+  note.date:
     displayName: Date
-  "note.description":
+  note.description:
     displayName: Description
-  "note.draft":
+  note.draft:
     displayName: Draft
-  "note.image":
+  note.image:
     displayName: Image
-  "note.lastModified":
+  note.lastModified:
     displayName: LastModified
-  "note.pubDate":
+  note.pubDate:
     displayName: Date
-  "note.tags":
+  note.tags:
     displayName: Tags
-  "note.title":
+  note.title:
     displayName: Title
-
 views:
   - type: cms
-    name: "Posts"
+    name: Posts
     filters:
       and:
         - file.folder.startsWith("posts")
@@ -63,13 +60,13 @@ views:
       - property: date
         direction: DESC
     imageProperty: note.image
-    fallbackToEmbeds: "if-empty"
-    propertyDisplay1: "formula.Slug"
+    fallbackToEmbeds: if-empty
+    propertyDisplay1: formula.Slug
     showTextPreview: true
-    imageFormat: "cover"
+    imageFormat: cover
     showDate: true
     showDraftStatus: true
-    propertyLabels: "above"
+    propertyLabels: above
     titleProperty: note.title
     dateProperty: note.date
     draftStatusProperty: note.draft
@@ -79,7 +76,7 @@ views:
     showTags: true
     tagsProperty: note.tags
     customizeNewButton: true
-    newNoteLocation: "posts"
+    newNoteLocation: posts
     cardSize: 250
     imageAspectRatio: 0.55
     maxTagsToShow: 2
@@ -89,28 +86,28 @@ views:
     scheduledDateProperty: note.date
     showScheduledBadge: true
   - type: cms
-    name: "Blog"
+    name: Blog
     filters:
       and:
         - file.folder.startsWith("Blog")
     sort:
       - property: file.ctime
         direction: DESC
-    imageFormat: "cover"
+    imageFormat: cover
     showDate: true
     customizeNewButton: true
-    newNoteLocation: "Blog"
-    fallbackToEmbeds: "if-empty"
+    newNoteLocation: Blog
+    fallbackToEmbeds: if-empty
     propertyDisplay1: file.fullname
     showTextPreview: true
-    propertyLabels: "above"
+    propertyLabels: above
     titleProperty: file.fullname
     titlePropertyNested: file.fullname
     dateProperty: file.ctime
     showTags: false
     showDraftStatus: false
   - type: cms
-    name: "Documentation"
+    name: Documentation
     filters:
       and:
         - file.folder.startsWith("docs")
@@ -122,12 +119,12 @@ views:
         direction: ASC
     imageProperty: note.image
     fallbackToEmbeds: true
-    propertyDisplay1: "formula.Slug"
+    propertyDisplay1: formula.Slug
     showTextPreview: true
-    imageFormat: "cover"
+    imageFormat: cover
     showDate: true
     showDraftStatus: true
-    propertyLabels: "above"
+    propertyLabels: above
     titleProperty: note.title
     dateProperty: note.lastModified
     draftStatusProperty: note.draft
@@ -137,13 +134,13 @@ views:
     showTags: false
     tagsProperty: note.tags
     customizeNewButton: true
-    newNoteLocation: "docs"
+    newNoteLocation: docs
     cardSize: 250
     imageAspectRatio: 0.55
     maxTagsToShow: 2
     propertyDisplay2: note.version
   - type: cms
-    name: "Pages"
+    name: Pages
     filters:
       and:
         - file.folder.startsWith("pages")
@@ -152,12 +149,12 @@ views:
         direction: ASC
     imageProperty: note.image
     fallbackToEmbeds: true
-    propertyDisplay1: "formula.Slug"
+    propertyDisplay1: formula.Slug
     showTextPreview: true
-    imageFormat: "cover"
+    imageFormat: cover
     showDate: true
     showDraftStatus: true
-    propertyLabels: "above"
+    propertyLabels: above
     titleProperty: note.title
     dateProperty: note.date
     draftStatusProperty: note.draft
@@ -167,12 +164,12 @@ views:
     showTags: true
     tagsProperty: note.tags
     customizeNewButton: true
-    newNoteLocation: "pages"
+    newNoteLocation: pages
     cardSize: 250
     imageAspectRatio: 0.55
     maxTagsToShow: 2
   - type: cms
-    name: "Projects"
+    name: Projects
     filters:
       and:
         - file.folder.startsWith("projects")
@@ -181,12 +178,12 @@ views:
         direction: ASC
     imageProperty: note.image
     fallbackToEmbeds: true
-    propertyDisplay1: "formula.Slug"
+    propertyDisplay1: formula.Slug
     showTextPreview: true
-    imageFormat: "cover"
+    imageFormat: cover
     showDate: true
     showDraftStatus: true
-    propertyLabels: "above"
+    propertyLabels: above
     titleProperty: note.title
     dateProperty: note.date
     draftStatusProperty: note.draft
@@ -196,12 +193,12 @@ views:
     showTags: true
     tagsProperty: note.tags
     customizeNewButton: true
-    newNoteLocation: "projects"
+    newNoteLocation: projects
     cardSize: 250
     imageAspectRatio: 0.55
     maxTagsToShow: 2
   - type: cms
-    name: "Special Pages"
+    name: Special Pages
     filters:
       and:
         - file.folder.startsWith("special")
@@ -210,12 +207,12 @@ views:
         direction: ASC
     imageProperty: note.image
     fallbackToEmbeds: true
-    propertyDisplay1: "formula.Slug"
+    propertyDisplay1: formula.Slug
     showTextPreview: false
-    imageFormat: "none"
+    imageFormat: none
     showDate: false
     showDraftStatus: false
-    propertyLabels: "above"
+    propertyLabels: above
     titleProperty: note.title
     dateProperty: note.date
     descriptionProperty: note.description
@@ -224,13 +221,13 @@ views:
     showTags: false
     tagsProperty: note.tags
     customizeNewButton: true
-    newNoteLocation: "pages"
+    newNoteLocation: pages
     cardSize: 250
     imageAspectRatio: 0.55
     maxTagsToShow: 2
     hideQuickEditIcon: true
   - type: cms
-    name: "All Content"
+    name: All Content
     groupBy:
       property: formula.Content Folder
       direction: ASC
@@ -239,12 +236,12 @@ views:
         direction: ASC
     imageProperty: note.image
     fallbackToEmbeds: true
-    propertyDisplay1: "formula.Slug"
+    propertyDisplay1: formula.Slug
     showTextPreview: true
-    imageFormat: "thumbnail"
+    imageFormat: thumbnail
     showDate: true
     showDraftStatus: true
-    propertyLabels: "above"
+    propertyLabels: above
     titleProperty: note.title
     dateProperty: note.lastModified
     draftStatusProperty: note.draft
