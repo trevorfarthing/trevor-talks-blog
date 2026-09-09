@@ -11,7 +11,7 @@ imageOG: false
 hideCoverImage: false
 hideTOC: false
 targetKeyword: ""
-draft: false
+draft: true
 aliases: []
 ---
 I proudly present: THE definitive guide to all of the best activities London has to offer. Well, to be truthful, this isn't a comprehensive list, but it does contain everything we personally did as well as my special notes.

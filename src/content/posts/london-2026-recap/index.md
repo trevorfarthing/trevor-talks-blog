@@ -6,11 +6,11 @@ tags:
   - travel
   - london
 image: westminster.jpeg
-imageAlt: 
-imageOG: false
+imageAlt:
+imageOG: true
 hideCoverImage: false
 hideTOC: false
-targetKeyword: 
+targetKeyword:
 draft: false
 aliases: posts
 ---
@@ -52,8 +52,8 @@ Of course, nothing is perfect. London has its flaws, just like any other city. L
 ---
 The stewardesses make their way down the aisle again, this time with afternoon tea: a scone, sandwich, pastries, and of course, black tea. They sure hand out a lot of food and drink up here. It seems like only an hour ago they gave us all ice cream bars. I can’t say I’m complaining. As the flight nears its end, I slowly come to the grips with the fact that I’ll be back in my own house again soon, doing mundane activities like cooking, cleaning, and going to work. Ugh. The familiarity of home and friends will be a welcome respite though. I can’t wait to recount my travels 10 times *minimum* to all those that ask. For now, I have the vivid memories of London circling my head.
 
-If you made it this far, see my article recounting all of our activities here:
-[One Week in London: Our Full Itinerary of Museums, Food, Pubs & Day Trips](posts/one-week-in-london/one-week-in-london-our-full-itinerary-of-museums-food-pubs-day-trips.md)
+If you made it this far, read about my NYC trip and compare here:
+[From Skeptic to Smitten: One Week in New York City](posts/from-skeptic-to-smitten-one-week-in-new-york-city/index.md)
 
 For more photos: [@trevor_farthing](https://instagram.com/trevor_farthing)
 
