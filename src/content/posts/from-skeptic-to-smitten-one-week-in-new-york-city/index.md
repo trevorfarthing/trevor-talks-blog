@@ -11,7 +11,7 @@ imageOG: true
 hideCoverImage: false
 hideTOC: false
 targetKeyword: ""
-draft: true
+draft: false
 aliases:
   - nyc-2026-recap
 ---
@@ -27,7 +27,7 @@ It wasn’t immediate sunshine and rainbows with NYC. When we first arrived a we
 
 But then, things started to change. The next morning, as my wife and I started across the Brooklyn Bridge, the clouds parted and the sun danced across the brilliant skyscrapers that stretched towards the heavens. Walking across that bridge felt like something out of a movie. I pulled out my Canon G7X and snapped some photos of my wife – potentially the best I’ve taken so far as an amateur photographer who doesn’t know what he’s doing. On the other side, we explored DUMBO and took in the iconic view of the Manhattan Bridge from the street. The trip only got better from here on out.
 
-![Brooklyn Bridge](https://assets.trevortalks.life/images/Pebble_Beach.jpg)
+![Natalie on the Brooklyn Bridge](https://assets.trevortalks.life/images/Nat_Bridge.jpg)![Brooklyn Bridge](https://assets.trevortalks.life/images/Pebble_Beach.jpg)
 *<small>Yes, these are raw, unedited images straight from the Canon. I guess sometimes I know what I’m doing.</small>*
 
 Of course, we hit all the tourist spots. The Financial District, 9/11 museum, boat ride to the Statue of Liberty, multiple observatories, Central Park, MoMA, Grand Central Station, Natural History Museum, The Highline…the list goes on. We might've set a record for most bars visited in a week. There’s always more to explore. New York operates on a scale unlike anything I’ve ever experienced. We spent most of a day in Central Park and my wife’s “scratch map” app told us that we only saw 5% of it. It’s *mind boggling*. I picture what living here would look like: a potential new adventure every week, experiencing a unique part of the city, venturing out to a pop-up exhibit, a fancy new restaurant or even just a picnic with a skyline view. As you can tell, I like to daydream. My heart likes the idea of NYC, but my brain says that living there and traveling there are entirely different. I’m sure at some point, the mundanity of life takes a hold and New York feels normal again. Regardless, the possibilities in the city are endless.
@@ -42,9 +42,8 @@ Now give me a second to shout out the walkability, just like I did in my [London
 
 I would be remiss not to mention some of the problems with NYC in this blog while I’m at it. Yes, it has crime. It’s a big city. There was a fatal stabbing in Times Square while we were in town. Overall though, the crime rate in NYC is [pretty low in comparison](https://www.security.org/resources/most-dangerous-cities/) to other large cities in the United States. Their trash system is also weird. They basically chuck all the trash bags in a giant, smelly heap on the sidewalk until they’re picked up. I realize some areas have started using bins, but it seems to be infrequent so far. The last point I’ll mention is that it’s _reeeaaalllyyy_ expensive. It makes Seattle look like a backwoods town in the middle of nowhere. Good cocktails are basically $20 minimum. Buying a condo is out of the question entirely, as even if you found a place with a decent price, the HOA charges thousands of dollars more a month. You can rent a nice 500 square foot apartment - if you’re willing to split it with 2 other people. I’m sure there are cheap meals somewhere, but I sure didn’t find them.
 
-[pic of trash bags]
-
-*<small>Just like…why?</small>
+![NYC trash bags](https://assets.trevortalks.life/images/NYC_Trash.jpg)
+*<small>Seriously, just like…why?</small>
 
 With all that being said, people obviously still live in New York City, even with lower paying jobs, and they make it work. It’s not impossible or no one would be there. Honestly, after a week, I understand why. There’s something about this place that’s hard to replicate. It feels built around people. Like someone purposefully architected a perfect Sim City. If you have a passion, you can explore it here. You can find the greatest financial institutions in the world, but also some of the most talented artists. You can stroll around acres of greenery or take a picture with a guy in a gorilla costume in front of a giant LED sign. It seems contradictory, but in NYC it works. It’s an ode to the duality of man.  New York City understands what makes a city work and executes it well. It’s living and breathing. It has a *pulse*. People keep it alive. There I go again with my clichés, but you get the point.
 
