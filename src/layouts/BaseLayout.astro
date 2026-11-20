@@ -11,6 +11,8 @@ import Lightbox from '@/components/Lightbox.astro';
 import ImageGalleryManager from '@/components/ImageGalleryManager.astro';
 import CategoryFilter from '@/components/CategoryFilter.astro';
 import '@/styles/global.css';
+// Site-specific overrides (flat cards, hover effects, homepage list). Must load after global.css.
+import '@/styles/modern.css';
 
 // Import local fonts if configured
 if (shouldLoadLocalFonts()) {
@@ -21,6 +23,16 @@ if (shouldLoadLocalFonts()) {
     import('@fontsource/inter/500.css');
     import('@fontsource/inter/600.css');
     import('@fontsource/inter/700.css');
+  }
+
+  // Import Plus Jakarta Sans (variable font, one file covers all weights)
+  if (siteConfig.fonts.families.body === 'Plus Jakarta Sans' || siteConfig.fonts.families.heading === 'Plus Jakarta Sans') {
+    import('@fontsource-variable/plus-jakarta-sans');
+  }
+
+  // Import Figtree (variable font, one file covers all weights)
+  if (siteConfig.fonts.families.body === 'Figtree' || siteConfig.fonts.families.heading === 'Figtree') {
+    import('@fontsource-variable/figtree');
   }
 
   // Import JetBrains Mono font
@@ -42,10 +54,20 @@ const { seoData, bodyClass = '' } = Astro.props;
 
 // Determine scrollbar class based on configuration
 const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
+
+/*
+  Read the configured custom theme at build time and embed it in the page.
+  The theme script below otherwise imports it from /src in the browser,
+  which only exists on the dev server, so production fell back to a default palette.
+*/
+type CustomThemeModule = { customTheme?: Record<string, Record<string, string>> };
+const customThemeModules = import.meta.glob<CustomThemeModule>('../themes/custom/*.ts', { eager: true });
+const customThemeData = customThemeModules[`../themes/custom/${siteConfig.customThemeFile}.ts`]?.customTheme;
+const customThemeJson = customThemeData ? JSON.stringify(customThemeData) : undefined;
 ---
 
 <!DOCTYPE html>
-<html lang={siteConfig.language} class={`scrollbar-hide ${scrollbarClass}`} data-theme-config={siteConfig.theme} data-custom-theme-file={siteConfig.customThemeFile} data-available-themes={JSON.stringify(siteConfig.availableThemes)} data-command-palette-enabled={siteConfig.commandPalette.enabled} data-command-palette-change-theme={siteConfig.commandPalette.quickActions.changeTheme} data-feature-button={siteConfig.featureButton} data-favicon-theme-adaptive={siteConfig.faviconThemeAdaptive}>
+<html lang={siteConfig.language} class={`scrollbar-hide ${scrollbarClass}`} data-theme-config={siteConfig.theme} data-custom-theme-file={siteConfig.customThemeFile} data-custom-theme={customThemeJson} data-available-themes={JSON.stringify(siteConfig.availableThemes)} data-command-palette-enabled={siteConfig.commandPalette.enabled} data-command-palette-change-theme={siteConfig.commandPalette.quickActions.changeTheme} data-feature-button={siteConfig.featureButton} data-favicon-theme-adaptive={siteConfig.faviconThemeAdaptive}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -726,8 +748,12 @@ const scrollbarClass = siteConfig.hideScrollBar ? '' : 'show-scrollbars';
 
         // Try to load the custom theme
         try {
-          // Import the custom theme dynamically
-          const customThemeModule = await import(`/src/themes/custom/${customThemeFile}.ts`);
+          // Use the theme embedded at build time when it's the configured one, otherwise import it (dev only)
+          const embeddedTheme = document.documentElement.getAttribute('data-custom-theme');
+          const useEmbeddedTheme = embeddedTheme && customThemeFile === window.siteConfig?.customThemeFile;
+          const customThemeModule = useEmbeddedTheme
+            ? { customTheme: JSON.parse(embeddedTheme) }
+            : await import(`/src/themes/custom/${customThemeFile}.ts`);
 
           // Look for the theme export - try different possible export names
           let themeData = null;

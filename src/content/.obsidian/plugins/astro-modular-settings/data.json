@@ -1,8 +1,8 @@
 {
   "runWizardOnStartup": true,
   "currentTemplate": "standard",
-  "currentTheme": "obsidian",
-  "customThemeFile": "custom",
+  "currentTheme": "custom",
+  "customThemeFile": "coral",
   "contentOrganization": "folder-based",
   "themeColors": {
     "mode": "simple",
@@ -167,8 +167,8 @@
     }
   },
   "typography": {
-    "headingFont": "Inter",
-    "proseFont": "Fira Code",
+    "headingFont": "Plus Jakarta Sans",
+    "proseFont": "Figtree",
     "monoFont": "JetBrains Mono",
     "fontSource": "local",
     "fontDisplay": "swap",

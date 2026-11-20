@@ -7,6 +7,7 @@ import { shouldShowPost, shouldShowContent, sortPostsByDate, processPost } from 
 import { hasProjectCategories } from '@/utils/categories';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PostCard from '@/components/PostCard.astro';
+import PostList from '@/components/PostList.astro';
 import ProjectCard from '@/components/ProjectCard.astro';
 import DocumentationCard from '@/components/DocumentationCard.astro';
 import Icon from '@/components/Icon.astro';
@@ -169,7 +170,7 @@ const structuredData = {
       <link
         rel="preload"
         as="image"
-        href={optimizePostImagePath(featuredPost.data.image, undefined, featuredPost.id)}
+        href={optimizePostImagePath(featuredPost.data.image, featuredPost.id, featuredPost.id)}
         fetchpriority="high"
       />
     )}
@@ -235,11 +236,7 @@ const structuredData = {
                 </div>
               )}
 
-              <div class="space-y-4">
-                {previewPosts.map((post, index) => (
-                  <PostCard post={post} eager={featuredPost ? index === 0 : index < 2} context="recent" />
-                ))}
-              </div>
+              <PostList posts={previewPosts} />
 
               {useSpecialTreatment && (
                 <div class="mt-8 text-center">

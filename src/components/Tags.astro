@@ -23,14 +23,12 @@ const sortedTags = [...tags].sort();
     </h3>
 
     <div class="flex flex-wrap gap-2">
+      {/* Same pill as the post card tags. Colors and the hover fill come from modern.css */}
       {sortedTags.map(tag => (
         <a
           href={`/posts/tag/${encodeURIComponent(tag)}`}
-          class={`inline-flex items-center px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
-            currentTag === tag
-              ? 'bg-highlight-100 dark:bg-highlight-900/40 text-highlight-800 dark:text-highlight-200 ring-1 ring-highlight-300 dark:ring-highlight-700'
-              : 'bg-primary-100 dark:bg-primary-800 text-primary-700 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-700 hover:text-primary-800 dark:hover:text-primary-200'
-          }`}
+          class="inline-flex items-center text-xs px-2.5 py-1 rounded-full border"
+          aria-current={currentTag === tag ? 'page' : undefined}
         >
           <span class="tag-text">{tag}</span>
           {showCount && (

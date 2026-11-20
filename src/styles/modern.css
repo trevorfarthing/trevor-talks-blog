@@ -1,0 +1,298 @@
+/*
+  Trevor Talks overrides for the Astro Modular theme.
+  Flat, rounded surfaces with hover effects instead of shadows and gray fills.
+
+  This file is ours, not the theme's, so `pnpm update` won't overwrite it.
+  It's imported after global.css in BaseLayout, so equal-specificity rules here win.
+  Colors come from the active theme's variables (src/themes/custom/coral.ts).
+*/
+
+:root {
+  --tt-radius: 20px;
+  --tt-radius-sm: 14px;
+  --tt-line: rgb(var(--color-primary-200));
+  --tt-muted: rgb(var(--color-primary-500));
+  --tt-accent: rgb(var(--color-highlight-600));
+  --tt-on-accent: #ffffff;
+  --tt-strong: rgb(var(--color-primary-950));
+  --tt-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.dark {
+  --tt-line: rgb(var(--color-primary-800));
+  --tt-muted: rgb(var(--color-primary-400));
+  --tt-accent: rgb(var(--color-highlight-400));
+  --tt-on-accent: rgb(var(--color-primary-950));
+  /* Black would vanish on the dark background, so the strong outline flips to near-white */
+  --tt-strong: rgb(var(--color-primary-100));
+}
+
+/* ---------- Post cards: flat surface, dark border and small lift on hover (effect 2) ---------- */
+
+.post-card,
+.featured-post {
+  background: transparent;
+  border: 1px solid var(--tt-line);
+  border-radius: var(--tt-radius);
+  box-shadow: none;
+  overflow: hidden;
+  transition: transform 0.3s var(--tt-ease), border-color 0.3s var(--tt-ease);
+}
+
+/* global.css applies dark-mode fills as `.dark .post-card`, which outranks the rule above */
+.dark .post-card,
+.dark .featured-post {
+  background: transparent;
+  border-color: var(--tt-line);
+}
+
+.post-card:hover,
+.featured-post:hover,
+.dark .post-card:hover,
+.dark .featured-post:hover {
+  box-shadow: none;
+  transform: translateY(-3px);
+  border-color: var(--tt-strong);
+}
+
+/* Drop the gray fill behind the cover image */
+.post-card .rounded-t-lg,
+.featured-post .rounded-t-lg {
+  background: transparent;
+}
+
+/* ---------- Cover image zooms inside the frame (effect 1) ---------- */
+
+.post-card img,
+.featured-post img {
+  transition: transform 0.7s var(--tt-ease), filter 0.7s var(--tt-ease);
+}
+
+.post-card:hover img,
+.featured-post:hover img {
+  transform: scale(1.06);
+  filter: saturate(1.3);
+}
+
+/* ---------- Title underline draws in (effect 3) ---------- */
+
+.card-title-text {
+  background-image: linear-gradient(var(--tt-accent), var(--tt-accent));
+  background-position: 0 100%;
+  background-size: 0 2px;
+  background-repeat: no-repeat;
+  padding-bottom: 2px;
+  transition: background-size 0.4s var(--tt-ease);
+}
+
+.post-card:hover .card-title-text,
+.featured-post:hover .card-title-text {
+  background-size: 100% 2px;
+}
+
+/* ---------- Tag pills fill from the left (effect 4) ---------- */
+
+/* Targets every tag pill (post cards, post pages, tag lists) without editing each component */
+a.rounded-full[href^="/posts/tag/"] {
+  color: rgb(var(--color-primary-700));
+  background-color: transparent;
+  background-image: linear-gradient(var(--tt-accent), var(--tt-accent));
+  background-position: left;
+  background-size: 0 100%;
+  background-repeat: no-repeat;
+  border-color: var(--tt-line);
+  transition: background-size 0.35s var(--tt-ease), color 0.35s var(--tt-ease), border-color 0.35s var(--tt-ease);
+}
+
+.dark a.rounded-full[href^="/posts/tag/"] {
+  color: rgb(var(--color-primary-300));
+}
+
+/* The tag currently being viewed (Tags.astro sidebar) stays filled */
+a.rounded-full[href^="/posts/tag/"]:hover,
+.dark a.rounded-full[href^="/posts/tag/"]:hover,
+a.rounded-full[href^="/posts/tag/"][aria-current="page"],
+.dark a.rounded-full[href^="/posts/tag/"][aria-current="page"] {
+  background-color: transparent;
+  background-size: 100% 100%;
+  color: var(--tt-on-accent);
+  border-color: var(--tt-accent);
+}
+
+/* The "+ N more" counter next to tags */
+.post-card span.rounded-full,
+.featured-post span.rounded-full {
+  background: transparent;
+  border-color: var(--tt-line);
+}
+
+/* ---------- Homepage post list with floating preview (effect 7) ---------- */
+
+.post-list {
+  position: relative;
+}
+
+.post-list-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--tt-line);
+}
+
+.post-list-row {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr) auto;
+  gap: 1.25rem;
+  align-items: baseline;
+  padding: 1.15rem 0.25rem;
+  border-bottom: 1px solid var(--tt-line);
+  color: var(--tt-strong);
+  text-decoration: none;
+  transition: opacity 0.3s var(--tt-ease);
+}
+
+/*
+  global.css turns every link coral and 80% opaque on hover (`a:hover`).
+  The title would inherit that because the theme's heading color variable is never set.
+  These rules are more specific, so rows keep their normal color.
+  The `.dark` versions are needed because global.css also has `.dark a` and `.dark a:hover`.
+*/
+.dark .post-list-row,
+.post-list-row:hover,
+.post-list-row:focus-visible,
+.dark .post-list-row:hover,
+.dark .post-list-row:focus-visible {
+  color: var(--tt-strong);
+  opacity: 1;
+}
+
+.post-list-date,
+.post-list-meta {
+  font-size: 0.875rem;
+  color: var(--tt-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.post-list-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  color: inherit;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  /* Variable fonts animate weight smoothly instead of jumping */
+  transition: transform 0.35s var(--tt-ease), font-weight 0.35s var(--tt-ease);
+}
+
+/* Dim the other rows, then nudge and embolden the hovered title */
+.post-list-rows:hover .post-list-row:not(:hover) {
+  opacity: 0.4;
+}
+
+.post-list-row:hover .post-list-title,
+.post-list-row:focus-visible .post-list-title {
+  transform: translateX(6px);
+  font-weight: 600;
+}
+
+.post-list-row:focus-visible {
+  outline: 2px solid var(--tt-accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.post-list-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 260px;
+  aspect-ratio: 3 / 2;
+  border-radius: var(--tt-radius-sm);
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(var(--preview-x, 0px), var(--preview-y, 0px)) scale(0.92) rotate(-2deg);
+  transition: opacity 0.25s var(--tt-ease), transform 0.25s var(--tt-ease);
+}
+
+.post-list-preview.is-visible {
+  opacity: 1;
+  transform: translate(var(--preview-x, 0px), var(--preview-y, 0px)) scale(1) rotate(-2deg);
+}
+
+.post-list-preview img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+
+.post-list-preview img.is-active {
+  opacity: 1;
+}
+
+/* Remove background from article */
+.article-main {
+  background-color: transparent;
+  background: transparent;
+}
+.dark .article-main {
+  background-color: transparent;
+  background: transparent;
+}
+
+.tags-container {
+  background-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+.dark .tags-container {
+  background-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Touch screens have no hover, so skip the preview and stack each row */
+@media (hover: none), (max-width: 640px) {
+  .post-list-preview {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .post-list-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
+  }
+
+  .post-list-meta {
+    display: none;
+  }
+}
+
+/* ---------- Reduced motion: keep color changes, drop movement ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card,
+  .featured-post,
+  .post-card img,
+  .featured-post img,
+  .card-title-text,
+  .post-list-title,
+  .post-list-preview {
+    transition: none;
+  }
+
+  .post-card:hover,
+  .featured-post:hover,
+  .post-card:hover img,
+  .featured-post:hover img,
+  .post-list-row:hover .post-list-title {
+    transform: none;
+  }
+}

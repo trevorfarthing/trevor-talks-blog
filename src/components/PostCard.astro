@@ -140,7 +140,7 @@ const shouldShowCoverImage = (() => {
             }
           })()}
           alt={imageAlt || `Featured image for post: ${title}`}
-          class="w-full h-full group-hover:scale-102 dark:group-hover:brightness-100 transition-all duration-300"
+          class="w-full h-full"
           width={800}
           height={450}
           format="webp"
@@ -181,10 +181,11 @@ const shouldShowCoverImage = (() => {
         )}
       </div>
 
-      <h3 id={`post-title-${post.id}`} class={`font-medium text-primary-900 dark:text-primary-100 leading-relaxed group-hover:text-highlight-600 dark:group-hover:text-highlight-400 transition-colors ${
+      <h3 id={`post-title-${post.id}`} class={`font-semibold text-primary-900 dark:text-primary-100 leading-relaxed ${
         featured ? 'text-lg' : 'text-base'
       }`}>
-        {title}
+        <!-- Inner span carries the hover underline (see modern.css) -->
+        <span class="card-title-text">{title}</span>
       </h3>
 
       {featured && description && (
