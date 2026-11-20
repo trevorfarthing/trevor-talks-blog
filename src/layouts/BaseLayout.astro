@@ -1,5 +1,5 @@
 ---
-import { siteConfig, getFontFamily, getGoogleFontsUrl, shouldLoadLocalFonts, shouldLoadCdnFonts, getFontDisplay, getThemeDisplayName } from '@/config';
+import { siteConfig, getFontFamily, getGoogleFontsUrl, shouldLoadCdnFonts, getFontDisplay, getThemeDisplayName } from '@/config';
 import type { SEOData } from '@/types';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
@@ -14,36 +14,19 @@ import '@/styles/global.css';
 // Site-specific overrides (flat cards, hover effects, homepage list). Must load after global.css.
 import '@/styles/modern.css';
 
-// Import local fonts if configured
-if (shouldLoadLocalFonts()) {
-  // Import Inter font
-  if (siteConfig.fonts.families.body === 'Inter' || siteConfig.fonts.families.heading === 'Inter') {
-    import('@fontsource/inter/300.css');
-    import('@fontsource/inter/400.css');
-    import('@fontsource/inter/500.css');
-    import('@fontsource/inter/600.css');
-    import('@fontsource/inter/700.css');
-  }
-
-  // Import Plus Jakarta Sans (variable font, one file covers all weights)
-  if (siteConfig.fonts.families.body === 'Plus Jakarta Sans' || siteConfig.fonts.families.heading === 'Plus Jakarta Sans') {
-    import('@fontsource-variable/plus-jakarta-sans');
-  }
-
-  // Import Figtree (variable font, one file covers all weights)
-  if (siteConfig.fonts.families.body === 'Figtree' || siteConfig.fonts.families.heading === 'Figtree') {
-    import('@fontsource-variable/figtree');
-  }
-
-  // Import JetBrains Mono font
-  if (siteConfig.fonts.families.mono === 'JetBrains Mono') {
-    import('@fontsource/jetbrains-mono/300.css');
-    import('@fontsource/jetbrains-mono/400.css');
-    import('@fontsource/jetbrains-mono/500.css');
-    import('@fontsource/jetbrains-mono/600.css');
-    import('@fontsource/jetbrains-mono/700.css');
-  }
-}
+/*
+  Self-hosted fonts. These must be static top-level imports.
+  The theme used conditional import() calls based on config, but Astro only processes
+  those in the prerender build and never copies their .woff2 files into dist/,
+  so production got the CSS but every font file 404'd.
+  If you change fonts in src/config.ts, update these imports to match.
+*/
+import '@fontsource-variable/plus-jakarta-sans'; // heading
+import '@fontsource-variable/figtree'; // body
+import '@fontsource/jetbrains-mono/400.css'; // code
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/600.css';
+import '@fontsource/jetbrains-mono/700.css';
 
 export interface Props {
   seoData: SEOData;
